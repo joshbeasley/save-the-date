@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laura Lee &amp; Josh — August 21, 2027</title>
+  <meta name="description" content="Laura Lee &amp; Josh are getting married in Old Lyme, Connecticut on August 21, 2027. Formal invitation to follow.">
+
+  <meta property="og:title" content="Laura Lee &amp; Josh — August 21, 2027">
+  <meta property="og:description" content="Laura Lee &amp; Josh are getting married in Old Lyme, Connecticut on August 21, 2027. Formal invitation to follow.">
+  <meta property="og:image" content="assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Laura Lee &amp; Josh — August 21, 2027">
+  <meta name="twitter:description" content="Laura Lee &amp; Josh are getting married in Old Lyme, Connecticut on August 21, 2027. Formal invitation to follow.">
+  <meta name="twitter:image" content="assets/og-image.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+
+  <!-- ══════════════ SCENE 1: GATE ══════════════ -->
+  <section class="gate" id="gate" aria-label="Save the date announcement">
+
+    <p class="gate-eyebrow" aria-hidden="true">YOU'VE GOT MAIL FROM</p>
+
+    <h1 class="gate-names">Laura Lee &amp; Josh</h1>
+
+    <div class="gate-envelope-wrap">
+      <button class="gate-envelope" id="envelope-btn" aria-label="Open the envelope">
+        <div class="env-stage">
+          <div class="env-scene" id="env-scene">
+
+            <!-- Back panel -->
+            <div class="env-back" aria-hidden="true">
+              <svg viewBox="0 0 145 100" preserveAspectRatio="none"
+                   style="position:absolute;inset:0;width:100%;height:100%"
+                   aria-hidden="true" focusable="false">
+                <rect width="145" height="100" rx="2" fill="var(--cream-shade)"/>
+              </svg>
+            </div>
+
+            <!-- Interior lace liner -->
+            <div class="env-liner" aria-hidden="true">
+              <svg viewBox="0 0 145 100" preserveAspectRatio="none"
+                   style="position:absolute;inset:0;width:100%;height:100%"
+                   aria-hidden="true" focusable="false">
+                <defs>
+                  <pattern id="p-liner" x="0" y="0" width="14" height="14"
+                           patternUnits="userSpaceOnUse">
+                    <path d="M 0 7 Q 3.5 1 7 7 Q 10.5 1 14 7"
+                          stroke="var(--cream-shade)" stroke-width="0.75" fill="none"/>
+                    <circle cx="7" cy="11.5" r="1" fill="var(--cream-shade)"/>
+                  </pattern>
+                </defs>
+                <rect width="145" height="100" fill="var(--cream)"/>
+                <rect width="145" height="100" fill="url(#p-liner)" opacity="0.55"/>
+              </svg>
+            </div>
+
+            <!-- Body — V-shaped pocket front -->
+            <div class="env-body" aria-hidden="true">
+              <svg viewBox="0 0 145 100" preserveAspectRatio="none"
+                   style="position:absolute;inset:0;width:100%;height:100%"
+                   aria-hidden="true" focusable="false">
+                <path d="M 0 0 L 72.5 39 L 145 0 L 145 100 L 0 100 Z"
+                      fill="var(--cream)"/>
+                <path d="M 2 2 L 72.5 40 L 143 2"
+                      stroke="var(--cream-shade)" stroke-width="1.5"
+                      fill="none" opacity="0.6"/>
+              </svg>
+            </div>
+
+            <!-- Shadow overlay — sweeps as flap opens -->
+            <div class="env-shadow" aria-hidden="true">
+              <svg viewBox="0 0 145 100" preserveAspectRatio="none"
+                   style="position:absolute;inset:0;width:100%;height:100%"
+                   aria-hidden="true" focusable="false">
+                <defs>
+                  <linearGradient id="g-shadow" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%"  stop-color="rgba(0,0,0,0.38)"/>
+                    <stop offset="75%" stop-color="rgba(0,0,0,0)"/>
+                  </linearGradient>
+                </defs>
+                <rect width="145" height="100" fill="url(#g-shadow)"/>
+              </svg>
+            </div>
+
+            <!-- Flap — the rotating 3D piece -->
+            <div class="env-flap" id="env-flap">
+
+              <!-- Front face: visible when envelope is closed -->
+              <div class="env-flap-front" aria-hidden="true">
+                <svg viewBox="0 0 145 100" preserveAspectRatio="none"
+                     style="position:absolute;inset:0;width:100%;height:100%"
+                     aria-hidden="true" focusable="false">
+                  <!-- Flap body -->
+                  <polygon points="0,0 145,0 72.5,100" fill="var(--cream)"/>
+                  <!-- Lace trim — left edge -->
+                  <polygon points="0,0 6,0 77,97 71,97"
+                           fill="var(--cream-shade)" opacity="0.45"/>
+                  <!-- Lace trim — right edge -->
+                  <polygon points="145,0 139,0 74,97 80,97"
+                           fill="var(--cream-shade)" opacity="0.45"/>
+                  <!-- Scallop dots along left edge -->
+                  <circle cx="11" cy="14" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <circle cx="21" cy="28" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <circle cx="31" cy="43" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <circle cx="41" cy="57" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <circle cx="51" cy="71" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <circle cx="61" cy="85" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <!-- Scallop dots along right edge -->
+                  <circle cx="134" cy="14" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <circle cx="124" cy="28" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <circle cx="114" cy="43" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <circle cx="104" cy="57" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <circle cx="94"  cy="71" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                  <circle cx="84"  cy="85" r="1.2" fill="var(--cream-shade)" opacity="0.5"/>
+                </svg>
+                <span class="env-monogram" aria-hidden="true">LJ</span>
+              </div>
+
+              <!-- Back face: lace liner underside — visible when open -->
+              <div class="env-flap-back" aria-hidden="true">
+                <svg viewBox="0 0 145 100" preserveAspectRatio="none"
+                     style="position:absolute;inset:0;width:100%;height:100%"
+                     aria-hidden="true" focusable="false">
+                  <defs>
+                    <pattern id="p-flap-back" x="0" y="0" width="14" height="14"
+                             patternUnits="userSpaceOnUse">
+                      <path d="M 0 7 Q 3.5 1 7 7 Q 10.5 1 14 7"
+                            stroke="var(--sand)" stroke-width="0.75" fill="none"/>
+                      <circle cx="7" cy="11.5" r="1" fill="var(--sand)"/>
+                    </pattern>
+                    <clipPath id="cp-flap">
+                      <polygon points="0,0 145,0 72.5,100"/>
+                    </clipPath>
+                  </defs>
+                  <polygon points="0,0 145,0 72.5,100" fill="var(--cream-shade)"/>
+                  <rect width="145" height="100"
+                        fill="url(#p-flap-back)"
+                        opacity="0.6"
+                        clip-path="url(#cp-flap)"/>
+                </svg>
+              </div>
+
+            </div><!-- /env-flap -->
+
+            <!-- Ribbon bow -->
+            <svg class="env-bow" viewBox="0 0 44 44" fill="none"
+                 aria-hidden="true" focusable="false">
+              <path d="M 22 23 C 15 15 6 17 7 23 C 8 29 16 29 21 25 Z"
+                    fill="var(--cream)" opacity="0.78"/>
+              <path d="M 22 23 C 29 15 38 17 37 23 C 36 29 28 29 23 25 Z"
+                    fill="var(--cream)" opacity="0.78"/>
+              <path d="M 21 25 C 17 31 12 37 9 42"
+                    stroke="var(--cream)" stroke-width="1.8"
+                    stroke-linecap="round" opacity="0.82"/>
+              <path d="M 23 25 C 27 31 32 37 35 42"
+                    stroke="var(--cream)" stroke-width="1.8"
+                    stroke-linecap="round" opacity="0.82"/>
+              <ellipse cx="22" cy="23.5" rx="3.8" ry="2.6"
+                       fill="var(--cream)" opacity="0.95"/>
+            </svg>
+
+          </div><!-- /env-scene -->
+        </div><!-- /env-stage -->
+      </button>
+    </div><!-- /gate-envelope-wrap -->
+
+    <p class="gate-prompt" id="gate-prompt" aria-hidden="true">TAP ENVELOPE TO OPEN</p>
+
+  </section><!-- /gate -->
+
+
+  <!-- ══════════════ SCENE 3: CARD ══════════════ -->
+  <section class="card-scene" id="card" aria-hidden="true" tabindex="-1">
+
+    <p class="card-eyebrow">WE'RE GETTING MARRIED!</p>
+
+    <h2 class="card-names">Laura Lee &amp; Josh</h2>
+
+    <!-- The Still Life -->
+    <div class="still-life"
+         role="img"
+         aria-label="Save the date card with wedding photos, greenery, and a coral wax seal reading August 21st 2027, Old Lyme, Connecticut">
+
+      <!-- z0: Envelope back panel -->
+      <div class="sl-back"></div>
+
+      <!-- z1: Open flap with lace liner arch -->
+      <div class="sl-flap-open" aria-hidden="true">
+        <svg viewBox="0 0 480 220" preserveAspectRatio="none"
+             style="width:100%;height:100%" aria-hidden="true" focusable="false">
+          <defs>
+            <pattern id="p-open-flap" x="0" y="0" width="16" height="16"
+                     patternUnits="userSpaceOnUse">
+              <path d="M 0 8 Q 4 1.5 8 8 Q 12 1.5 16 8"
+                    stroke="var(--sand)" stroke-width="0.9" fill="none"/>
+              <circle cx="8" cy="13" r="1.1" fill="var(--sand)"/>
+            </pattern>
+          </defs>
+          <path d="M 0 0 L 480 0 L 480 165
+                   Q 445 140 405 155 Q 365 172 325 150
+                   Q 285 128 245 150 Q 205 172 165 152
+                   Q 125 132 85 155 Q 45 178 0 158 Z"
+                fill="var(--cream-shade)"/>
+          <path d="M 0 0 L 480 0 L 480 165
+                   Q 445 140 405 155 Q 365 172 325 150
+                   Q 285 128 245 150 Q 205 172 165 152
+                   Q 125 132 85 155 Q 45 178 0 158 Z"
+                fill="url(#p-open-flap)" opacity="0.4"/>
+          <!-- Scalloped bottom edge -->
+          <path d="M 0 158 Q 45 178 85 155 Q 125 132 165 152
+                   Q 205 172 245 150 Q 285 128 325 150
+                   Q 365 172 405 155 Q 445 140 480 165"
+                stroke="var(--cream-deep)" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- z2: Greenery -->
+      <svg class="sl-greenery" viewBox="0 0 480 380"
+           preserveAspectRatio="xMidYMax meet"
+           aria-hidden="true" focusable="false">
+        <!-- Left: arcing stem with alternating oval leaves -->
+        <path d="M 95 370 Q 82 285 93 205 Q 102 152 96 82 Q 93 50 98 18"
+              stroke="var(--marsh)" stroke-width="2.5"
+              fill="none" stroke-linecap="round"/>
+        <ellipse cx="81" cy="338" rx="17" ry="9"
+                 transform="rotate(-34 81 338)" fill="var(--marsh)" opacity="0.9"/>
+        <ellipse cx="109" cy="304" rx="17" ry="9"
+                 transform="rotate(22 109 304)" fill="var(--marsh-pale)"/>
+        <ellipse cx="80" cy="272" rx="16" ry="8.5"
+                 transform="rotate(-36 80 272)" fill="var(--marsh)" opacity="0.9"/>
+        <ellipse cx="108" cy="241" rx="15.5" ry="8"
+                 transform="rotate(19 108 241)" fill="var(--marsh-pale)" opacity="0.85"/>
+        <ellipse cx="82" cy="212" rx="14.5" ry="7.5"
+                 transform="rotate(-30 82 212)" fill="var(--marsh)" opacity="0.85"/>
+        <ellipse cx="106" cy="184" rx="14" ry="7"
+                 transform="rotate(24 106 184)" fill="var(--marsh-pale)" opacity="0.8"/>
+        <ellipse cx="84" cy="158" rx="13" ry="6.5"
+                 transform="rotate(-28 84 158)" fill="var(--marsh)" opacity="0.8"/>
+        <ellipse cx="103" cy="132" rx="12" ry="6"
+                 transform="rotate(20 103 132)" fill="var(--marsh-pale)" opacity="0.75"/>
+        <ellipse cx="86" cy="108" rx="11" ry="5.5"
+                 transform="rotate(-22 86 108)" fill="var(--marsh)" opacity="0.75"/>
+        <ellipse cx="100" cy="86"  rx="10" ry="5"
+                 transform="rotate(16 100 86)"  fill="var(--marsh-pale)" opacity="0.7"/>
+        <ellipse cx="88" cy="66"   rx="9"  ry="4.5"
+                 transform="rotate(-18 88 66)"   fill="var(--marsh)" opacity="0.7"/>
+        <ellipse cx="98" cy="48"   rx="8"  ry="4"
+                 transform="rotate(12 98 48)"    fill="var(--marsh-pale)" opacity="0.6"/>
+
+        <!-- Right: drooping amaranthus from upper right -->
+        <path d="M 402 0 Q 398 44 386 80 Q 372 118 352 148"
+              stroke="var(--marsh)" stroke-width="2.5"
+              fill="none" stroke-linecap="round"/>
+        <path d="M 399 14 Q 414 38 408 64"
+              stroke="var(--marsh-pale)" stroke-width="1.7"
+              fill="none" stroke-linecap="round" opacity="0.9"/>
+        <path d="M 394 32 Q 412 56 400 82"
+              stroke="var(--marsh)" stroke-width="1.7"
+              fill="none" stroke-linecap="round" opacity="0.85"/>
+        <path d="M 388 52 Q 406 76 392 102"
+              stroke="var(--marsh-pale)" stroke-width="1.6"
+              fill="none" stroke-linecap="round" opacity="0.85"/>
+        <path d="M 380 74 Q 398 97 382 122"
+              stroke="var(--marsh)" stroke-width="1.6"
+              fill="none" stroke-linecap="round" opacity="0.8"/>
+        <path d="M 369 97 Q 387 120 370 145"
+              stroke="var(--marsh-pale)" stroke-width="1.5"
+              fill="none" stroke-linecap="round" opacity="0.78"/>
+        <path d="M 358 120 Q 374 142 356 165"
+              stroke="var(--marsh)" stroke-width="1.5"
+              fill="none" stroke-linecap="round" opacity="0.75"/>
+        <ellipse cx="397" cy="22"  rx="5.5" ry="3"
+                 transform="rotate(-18 397 22)"  fill="var(--marsh-pale)" opacity="0.7"/>
+        <ellipse cx="391" cy="48"  rx="5"   ry="3"
+                 transform="rotate(-12 391 48)"  fill="var(--marsh)"      opacity="0.7"/>
+        <ellipse cx="383" cy="74"  rx="4.5" ry="2.8"
+                 transform="rotate(-8 383 74)"   fill="var(--marsh-pale)" opacity="0.65"/>
+        <ellipse cx="372" cy="99"  rx="4"   ry="2.5"
+                 fill="var(--marsh)"      opacity="0.65"/>
+        <ellipse cx="360" cy="122" rx="3.5" ry="2.2"
+                 fill="var(--marsh-pale)" opacity="0.6"/>
+      </svg>
+
+      <!-- z3: Photo A -->
+      <div class="sl-photo sl-photo-a">
+        <img src="assets/photo-1.jpg"
+             alt="Laura Lee and Josh"
+             width="800" height="1000">
+      </div>
+
+      <!-- z4: Photo B -->
+      <div class="sl-photo sl-photo-b">
+        <img src="assets/photo-2.jpg"
+             alt="Laura Lee and Josh"
+             width="800" height="1000"
+             loading="lazy">
+      </div>
+
+      <!-- z5: The card -->
+      <div class="sl-card">
+        <p class="sl-card-script">Save our Date</p>
+      </div>
+
+      <!-- z6: Envelope front pocket -->
+      <div class="sl-pocket" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none"
+             style="width:100%;height:100%" aria-hidden="true" focusable="false">
+          <path d="M 0 0 L 50 29 L 100 0 L 100 100 L 0 100 Z"
+                fill="var(--cream)"/>
+          <path d="M 2 2 L 50 30 L 98 2"
+                stroke="var(--cream-deep)" stroke-width="2.5"
+                fill="none" opacity="0.42"/>
+        </svg>
+      </div>
+
+      <!-- z7: Wax seal -->
+      <div class="sl-seal" aria-hidden="true">
+        <svg viewBox="-4 -4 108 108"
+             style="position:absolute;inset:0;width:100%;height:100%"
+             aria-hidden="true" focusable="false">
+          <!-- Shadow -->
+          <path d="M 36.6 17.7
+                   Q 50 -5.7 63.4 17.7
+                   Q 89.35 10.65 82.3 36.6
+                   Q 105.7 50 82.3 63.4
+                   Q 89.35 89.35 63.4 82.3
+                   Q 50 105.7 36.6 82.3
+                   Q 10.65 89.35 17.7 63.4
+                   Q -5.7 50 17.7 36.6
+                   Q 10.65 10.65 36.6 17.7 Z"
+                fill="var(--coral-deep)"
+                transform="translate(0.5 2.5)"
+                opacity="0.65"/>
+          <!-- Flower -->
+          <path d="M 36.6 17.7
+                   Q 50 -5.7 63.4 17.7
+                   Q 89.35 10.65 82.3 36.6
+                   Q 105.7 50 82.3 63.4
+                   Q 89.35 89.35 63.4 82.3
+                   Q 50 105.7 36.6 82.3
+                   Q 10.65 89.35 17.7 63.4
+                   Q -5.7 50 17.7 36.6
+                   Q 10.65 10.65 36.6 17.7 Z"
+                fill="var(--coral)"/>
+        </svg>
+        <div class="seal-text-overlay" aria-hidden="true">
+          <p>08.21.2027</p>
+          <p>OLD LYME</p>
+          <p>CONNECTICUT</p>
+        </div>
+      </div>
+
+      <!-- z8: Monogram on pocket face -->
+      <p class="sl-monogram" aria-hidden="true">LJ</p>
+
+    </div><!-- /still-life -->
+
+    <div class="card-footer">
+      <p class="card-location">OLD LYME, CONNECTICUT</p>
+      <p class="card-date">08.21.2027</p>
+      <p class="card-formal">Formal invitation to follow</p>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint" aria-hidden="true">
+      <div class="scroll-hint-line"></div>
+      <svg viewBox="0 0 14 8" aria-hidden="true" focusable="false">
+        <polyline points="1,1 7,7 13,1"/>
+      </svg>
+    </div>
+
+  </section><!-- /card-scene -->
+
+
+  <!-- ══════════════ SCENE 4: COUNTDOWN ══════════════ -->
+  <section class="countdown-section" id="countdown"
+           aria-label="Wedding countdown and address collection">
+
+    <p class="countdown-heading" id="countdown-heading">WE HOPE YOU CAN JOIN US</p>
+
+    <div class="countdown-display"
+         id="countdown-display"
+         aria-live="off"
+         aria-atomic="true"
+         aria-label="Countdown to the wedding">
+      <div class="countdown-group">
+        <span class="countdown-num" id="cd-days">365</span>
+        <span class="countdown-unit">DAYS</span>
+      </div>
+      <span class="countdown-sep" aria-hidden="true">:</span>
+      <div class="countdown-group">
+        <span class="countdown-num" id="cd-hours">00</span>
+        <span class="countdown-unit">HOURS</span>
+      </div>
+      <span class="countdown-sep" aria-hidden="true">:</span>
+      <div class="countdown-group">
+        <span class="countdown-num" id="cd-minutes">00</span>
+        <span class="countdown-unit">MINUTES</span>
+      </div>
+      <span class="countdown-sep" aria-hidden="true">:</span>
+      <div class="countdown-group">
+        <span class="countdown-num" id="cd-seconds">00</span>
+        <span class="countdown-unit">SECONDS</span>
+      </div>
+    </div>
+
+    <p class="countdown-body">
+      Formal invitation to follow, please click below to share your address&hellip;
+    </p>
+
+    <a class="address-btn"
+       id="address-btn"
+       href="#"
+       target="_blank"
+       rel="noopener noreferrer">SHARE YOUR ADDRESS</a>
+
+    <p class="countdown-sig">Laura Lee &amp; Josh</p>
+
+  </section>
+
+</main>
+
+<footer>
+  <p>&copy; 2027 Laura Lee &amp; Josh &mdash; Old Lyme, Connecticut</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

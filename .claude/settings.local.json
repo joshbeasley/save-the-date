@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(convert --version)",
+      "Bash(npx playwright *)",
+      "Bash(node *)",
+      "Bash(npx --yes playwright get-browsers-path)",
+      "Read(//Users/**)",
+      "Bash(npm list *)",
+      "Bash(pkill -f \"python3 -m http.server 8421\")",
+      "Bash(lsof -ti:8000)",
+      "Bash(xargs kill -9)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/)"
+    ]
+  }
+}
