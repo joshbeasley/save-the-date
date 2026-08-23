@@ -11,7 +11,12 @@
       "Bash(pkill -f \"python3 -m http.server 8421\")",
       "Bash(lsof -ti:8000)",
       "Bash(xargs kill -9)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/)",
+      "Bash(sed -i '' 's/Laura Lee \\\\&amp; Josh/Josh \\\\&amp; Laura Lee/g; s/Laura Lee and Josh/Josh and Laura Lee/g; s/Laura Lee \\\\& Josh/Josh \\\\& Laura Lee/g' /Users/joshuabeasley/Projects/ClaudeWorkspace/wedding-website/index.html)",
+      "Bash(sed -i '' 's/Laura Lee \\\\& Josh/Josh \\\\& Laura Lee/g' /Users/joshuabeasley/Projects/ClaudeWorkspace/wedding-website/README.md)",
+      "Bash(pkill -f \"python3 -m http.server 8000\")",
+      "Bash(PLAYWRIGHT_BROWSERS_PATH=/Users/joshuabeasley/.npm/_npx/e41f203b7505f1fb/node_modules/playwright node *)",
+      "Bash(PLAYWRIGHT_BROWSERS_PATH=/Users/joshuabeasley/Library/Caches/ms-playwright node *)"
     ]
   }
 }

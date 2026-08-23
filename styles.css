@@ -98,7 +98,7 @@ button {
 
 /* Gate opening crossfade */
 .gate.is-opening {
-  animation: gate-bg-out 600ms var(--ease-in-out-soft) 1000ms forwards;
+  animation: gate-bg-out 750ms var(--ease-in-out-soft) 1250ms forwards;
 }
 
 @keyframes gate-bg-out {
@@ -123,9 +123,11 @@ button {
   font-size: clamp(2.6rem, 11vw, 5.5rem);
   font-weight: 400;
   color: var(--ink-on-deep);
-  line-height: 1.1;
-  padding: 0.25em 0.2em 0.35em;
+  line-height: 1.3;
+  padding: 0.3em 0.4em 0.5em;
   overflow: visible;
+  position: relative;
+  z-index: 1;
   opacity: 0;
   transform: translateY(12px);
   animation: fade-up 1100ms var(--ease-out-soft) 500ms forwards;
@@ -342,7 +344,7 @@ button {
 
 /* Scene: hold, then smooth zoom approach from 600ms */
 .gate.is-opening .env-scene {
-  animation: env-scene-open 1600ms linear forwards;
+  animation: env-scene-open 2000ms linear forwards;
   will-change: transform;
 }
 
@@ -355,22 +357,22 @@ button {
   100%    { transform: scale(5.2) translateY(-4%) translateZ(0); }
 }
 
-/* Flap opens 0–1000ms */
+/* Flap opens 0–1250ms */
 .gate.is-opening .env-flap {
-  animation: env-flap-open 1600ms linear forwards;
+  animation: env-flap-open 2000ms linear forwards;
   will-change: transform;
 }
 
 @keyframes env-flap-open {
-  0%    { transform: rotateX(0deg)    translateZ(3px);
+  0%    { transform: rotateX(0deg)   translateZ(3px);
           animation-timing-function: cubic-bezier(0.45, 0, 0.35, 1); }
-  62.5% { transform: rotateX(-168deg) translateZ(3px); }
-  100%  { transform: rotateX(-168deg) translateZ(3px); }
+  62.5% { transform: rotateX(168deg) translateZ(3px); }
+  100%  { transform: rotateX(168deg) translateZ(3px); }
 }
 
 /* Liner reveals 0–500ms */
 .gate.is-opening .env-liner {
-  animation: env-liner-reveal 1600ms linear forwards;
+  animation: env-liner-reveal 2000ms linear forwards;
 }
 
 @keyframes env-liner-reveal {
@@ -381,7 +383,7 @@ button {
 
 /* Bow releases 0–520ms */
 .gate.is-opening .env-bow {
-  animation: env-bow-release 1600ms linear forwards;
+  animation: env-bow-release 2000ms linear forwards;
 }
 
 @keyframes env-bow-release {
@@ -393,7 +395,7 @@ button {
 
 /* Shadow sweeps 100–1000ms */
 .gate.is-opening .env-shadow {
-  animation: env-shadow-sweep 1600ms linear forwards;
+  animation: env-shadow-sweep 2000ms linear forwards;
 }
 
 @keyframes env-shadow-sweep {
@@ -432,12 +434,12 @@ button {
 
 /* Card typography — all start hidden for stagger reveal */
 .card-eyebrow {
-  font-size: clamp(0.66rem, 2vw, 0.82rem);
+  font-size: clamp(0.8rem, 2.6vw, 1.05rem);
   font-weight: 400;
   color: var(--ink-on-deep-soft);
   text-transform: uppercase;
-  letter-spacing: 0.28em;
-  text-indent: 0.28em;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
   opacity: 0;
   transform: translateY(10px);
 }
@@ -447,9 +449,11 @@ button {
   font-size: clamp(2.4rem, 10vw, 5rem);
   font-weight: 400;
   color: var(--ink-on-deep);
-  line-height: 1.1;
-  padding: 0.25em 0.2em 0.35em;
+  line-height: 1.3;
+  padding: 0.3em 0.4em 0.5em;
   overflow: visible;
+  position: relative;
+  z-index: 1;
   opacity: 0;
   transform: translateY(14px);
 }
@@ -745,23 +749,21 @@ button {
 /* ── 11. Countdown Section ─────────────────────────────────── */
 .countdown-section {
   background: var(--cream);
-  min-height: 100vh;
-  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: clamp(1.5rem, 3.5vw, 2.5rem);
-  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem clamp(4rem, 9vw, 7rem);
 }
 
 .countdown-heading {
-  font-size: clamp(0.7rem, 2vw, 0.86rem);
+  font-size: clamp(0.82rem, 2.5vw, 1rem);
   font-weight: 400;
   color: var(--ink-on-cream-soft);
   text-transform: uppercase;
-  letter-spacing: 0.28em;
-  text-indent: 0.28em;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
   text-align: center;
 }
 
@@ -850,9 +852,11 @@ button {
   font-family: 'Pinyon Script', 'Parisienne', cursive;
   font-size: clamp(1.9rem, 6vw, 2.8rem);
   color: var(--ink-on-cream-soft);
-  line-height: 1.1;
-  padding: 0.25em 0.2em 0.35em;
+  line-height: 1.3;
+  padding: 0.3em 0.4em 0.5em;
   overflow: visible;
+  position: relative;
+  z-index: 1;
 }
 
 /* ── 12. Footer ────────────────────────────────────────────── */

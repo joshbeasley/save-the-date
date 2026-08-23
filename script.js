@@ -176,8 +176,8 @@ function handleEnvelopeOpen() {
   // Full animation: CSS keyframes take over from here
   gate.classList.add('is-opening');
 
-  // Reveal card exactly when gate starts fading (1000ms) for a smooth crossfade
-  setTimeout(revealCard, 1000);
+  // Reveal card exactly when gate starts fading (1250ms) for a smooth crossfade
+  setTimeout(revealCard, 1250);
 
   // Listen specifically for the gate's own fade-out ending (at 1600ms)
   gate.addEventListener('animationend', onGateAnimEnd);
@@ -191,6 +191,75 @@ function onGateAnimEnd(e) {
   unlockScroll();
   focusCard();
   cleanupWillChange();
+  if (!prefersReducedMotion) launchConfetti();
+}
+
+// ─── CONFETTI ────────────────────────────────────────────────────────────────
+function launchConfetti() {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = [
+    'position:fixed', 'inset:0', 'width:100%', 'height:100%',
+    'pointer-events:none', 'z-index:200', 'opacity:1'
+  ].join(';');
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const COLORS = ['#b5994e','#c86b55','#d4c09e','#a8c4a0','#f5f0e8','#7da88a'];
+  const COUNT  = 90;
+  const LIFE   = 2800; // ms before fade-out begins
+
+  const particles = Array.from({ length: COUNT }, () => ({
+    x:   Math.random() * canvas.width,
+    y:   -10 - Math.random() * 120,
+    w:   5 + Math.random() * 7,
+    h:   3 + Math.random() * 5,
+    vx:  (Math.random() - 0.5) * 2.5,
+    vy:  1.8 + Math.random() * 3.5,
+    grav: 0.04 + Math.random() * 0.04,
+    angle: Math.random() * Math.PI * 2,
+    spin:  (Math.random() - 0.5) * 0.18,
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    alpha: 1,
+  }));
+
+  let start = null;
+
+  function tick(ts) {
+    if (!start) start = ts;
+    const elapsed = ts - start;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let alive = false;
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.grav;
+      p.angle += p.spin;
+      if (elapsed > LIFE) p.alpha = Math.max(0, p.alpha - 0.022);
+
+      if (p.alpha > 0 && p.y < canvas.height + 20) {
+        alive = true;
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      }
+    }
+
+    if (alive) {
+      requestAnimationFrame(tick);
+    } else {
+      canvas.remove();
+    }
+  }
+
+  requestAnimationFrame(tick);
 }
 
 function revealCard() {

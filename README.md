@@ -1,4 +1,4 @@
-# Laura Lee & Josh — Save the Date
+# Josh & Laura Lee — Save the Date
 
 **August 21, 2027 · Old Lyme, Connecticut**
 
