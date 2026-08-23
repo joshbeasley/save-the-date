@@ -310,7 +310,7 @@ button {
 }
 
 .env-flap-back {
-  transform: rotateX(180deg);
+  transform: rotateY(180deg);
 }
 
 /* Monogram on flap */
