@@ -222,6 +222,12 @@ button {
   border-radius: 4px;
 }
 
+/* Programmatically-focused elements (tabindex="-1") are for screen-reader
+   placement only — suppress the visual focus ring. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
 /* ── 6. Envelope 3D Structure ──────────────────────────────── */
 .env-stage {
   perspective: 1000px;
