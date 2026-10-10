@@ -11,17 +11,10 @@
         picks up the slow continuous "breathing" zoom defined in CSS
         (confirmed present in the reference video well after its own
         entrance had finished — see styles.css for how it was measured).
-     3. Reveals the "Replay animation" button once it knows JS and
-        motion are both available.
-     4. Replays the sequence on click: stops breathing, removes
-        .is-playing, forces a reflow, then re-adds it — restarting
-        cleanly with no stacked timers or lingering breathe animation,
-        however fast the button is clicked.
    ─────────────────────────────────────────────────────────── */
 
 (function () {
   var poster = document.getElementById('poster');
-  var replayBtn = document.getElementById('replay-btn');
 
   if (!poster) return;
 
@@ -29,7 +22,7 @@
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (reducedMotion) {
-    // Composition is already complete via CSS defaults; no button, no animation.
+    // Composition is already complete via CSS defaults; no animation.
     return;
   }
 
@@ -38,40 +31,18 @@
   // small buffer so breathing never starts before the wipe finishes.
   var ENTRANCE_TOTAL_MS = 3900;
 
-  var breatheTimer = null;
-
-  function play() {
-    // Double rAF: ensures the browser has committed the pre-animation
-    // (.anim-armed) styles in a paint before .is-playing flips them,
-    // so the transition actually animates instead of jumping.
+  // Double rAF: ensures the browser has committed the pre-animation
+  // (.anim-armed) styles in a paint before .is-playing flips them,
+  // so the transition actually animates instead of jumping.
+  requestAnimationFrame(function () {
     requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        poster.classList.add('is-playing');
-      });
+      poster.classList.add('is-playing');
     });
-    breatheTimer = window.setTimeout(function () {
-      poster.classList.add('breathe');
-    }, ENTRANCE_TOTAL_MS);
-  }
+  });
 
-  function replay() {
-    if (breatheTimer !== null) {
-      window.clearTimeout(breatheTimer);
-      breatheTimer = null;
-    }
-    poster.classList.remove('breathe');
-    poster.classList.remove('is-playing');
-    // Force reflow so the removal is committed before re-adding the class.
-    void poster.offsetWidth;
-    play();
-  }
-
-  play();
-
-  if (replayBtn) {
-    replayBtn.hidden = false;
-    replayBtn.addEventListener('click', replay);
-  }
+  window.setTimeout(function () {
+    poster.classList.add('breathe');
+  }, ENTRANCE_TOTAL_MS);
 })();
 
 /* ───────────────────────────────────────────────────────────
