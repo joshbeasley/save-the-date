@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 640" preserveAspectRatio="none">
+  <defs>
+    <filter id="soft2" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.2"/>
+    </filter>
+    <filter id="crumple" x="-60%" y="-60%" width="220%" height="220%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.01 0.014" numOctaves="3" seed="11" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="46" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="10"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix"
+        values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0.08 0"/>
+    </filter>
+    <radialGradient id="edgeShade" cx="50%" cy="44%" r="78%">
+      <stop offset="55%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#3f3c2d" stop-opacity="0.16"/>
+    </radialGradient>
+  </defs>
+
+  <!-- base sheet -->
+  <rect width="360" height="640" fill="#DEDCD2"/>
+
+  <!-- broad crumple shadow bands: wide, overlapping, organic edges via displacement -->
+  <g filter="url(#crumple)">
+    <polygon points="-40,70 420,30 420,120 -40,170" fill="#88846F" opacity="0.18"/>
+    <polygon points="-40,160 420,210 420,290 -40,250" fill="#827E68" opacity="0.16"/>
+    <polygon points="-40,290 420,340 420,230 -40,220" fill="#8A8671" opacity="0.14"/>
+    <polygon points="-40,370 420,410 420,470 -40,440" fill="#847F6A" opacity="0.18"/>
+    <polygon points="-40,470 420,440 420,520 -40,540" fill="#88846F" opacity="0.15"/>
+    <polygon points="-40,540 420,570 420,640 -40,620" fill="#827E68" opacity="0.17"/>
+    <polygon points="20,-40 60,420 10,680 -40,400" fill="#8A8671" opacity="0.1"/>
+    <polygon points="300,-40 340,300 300,680 260,300" fill="#827E68" opacity="0.1"/>
+  </g>
+
+  <!-- broad crumple highlight bands -->
+  <g filter="url(#crumple)">
+    <polygon points="-40,10 420,-20 420,55 -40,80" fill="#F3F1E8" opacity="0.26"/>
+    <polygon points="-40,210 420,180 420,240 -40,270" fill="#F0EEE4" opacity="0.22"/>
+    <polygon points="-40,320 420,350 420,400 -40,375" fill="#F3F1E8" opacity="0.2"/>
+    <polygon points="-40,500 420,480 420,530 -40,555" fill="#F0EEE4" opacity="0.2"/>
+    <polygon points="-40,590 420,610 420,660 -40,640" fill="#F3F1E8" opacity="0.2"/>
+  </g>
+
+  <!-- crisp thin crease highlight + shadow pairs riding over the broad folds -->
+  <g opacity="0.55" filter="url(#soft2)">
+    <path d="M-10,95 C90,78 170,112 370,88" stroke="#F4F2E9" stroke-width="2"/>
+    <path d="M-10,99 C90,82 170,116 370,92" stroke="#827D6A" stroke-width="1.4" opacity="0.6"/>
+  </g>
+  <g opacity="0.5" filter="url(#soft2)">
+    <path d="M20,10 C45,70 15,140 48,205" stroke="#F4F2E9" stroke-width="1.8" fill="none"/>
+    <path d="M24,10 C49,70 19,140 52,205" stroke="#827D6A" stroke-width="1.3" fill="none" opacity="0.55"/>
+  </g>
+  <g opacity="0.5" filter="url(#soft2)">
+    <path d="M-10,245 C100,228 210,264 370,238" stroke="#F4F2E9" stroke-width="2" fill="none"/>
+    <path d="M-10,250 C100,233 210,269 370,243" stroke="#827D6A" stroke-width="1.4" fill="none" opacity="0.55"/>
+  </g>
+  <g opacity="0.45" filter="url(#soft2)">
+    <path d="M300,20 C320,90 285,150 315,230" stroke="#F4F2E9" stroke-width="1.8" fill="none"/>
+    <path d="M296,20 C316,90 281,150 311,230" stroke="#827D6A" stroke-width="1.3" fill="none" opacity="0.5"/>
+  </g>
+  <g opacity="0.5" filter="url(#soft2)">
+    <path d="M-10,355 C110,336 220,374 370,350" stroke="#F4F2E9" stroke-width="2.1" fill="none"/>
+    <path d="M-10,360 C110,341 220,379 370,355" stroke="#7D7865" stroke-width="1.5" fill="none" opacity="0.55"/>
+  </g>
+  <g opacity="0.42" filter="url(#soft2)">
+    <path d="M140,280 C165,340 130,400 160,460" stroke="#F4F2E9" stroke-width="1.7" fill="none"/>
+    <path d="M144,280 C169,340 134,400 164,460" stroke="#827D6A" stroke-width="1.2" fill="none" opacity="0.5"/>
+  </g>
+  <g opacity="0.5" filter="url(#soft2)">
+    <path d="M-10,465 C100,446 230,486 370,460" stroke="#F4F2E9" stroke-width="2.1" fill="none"/>
+    <path d="M-10,470 C100,451 230,491 370,465" stroke="#7D7865" stroke-width="1.5" fill="none" opacity="0.55"/>
+  </g>
+  <g opacity="0.45" filter="url(#soft2)">
+    <path d="M60,420 C85,480 45,540 75,610" stroke="#F4F2E9" stroke-width="1.7" fill="none"/>
+    <path d="M64,420 C89,480 49,540 79,610" stroke="#827D6A" stroke-width="1.2" fill="none" opacity="0.5"/>
+  </g>
+  <g opacity="0.5" filter="url(#soft2)">
+    <path d="M-10,555 C110,536 230,576 370,550" stroke="#F4F2E9" stroke-width="2.1" fill="none"/>
+    <path d="M-10,560 C110,541 230,581 370,555" stroke="#7D7865" stroke-width="1.5" fill="none" opacity="0.55"/>
+  </g>
+  <g opacity="0.4" filter="url(#soft2)">
+    <path d="M250,460 C270,520 240,570 265,630" stroke="#F4F2E9" stroke-width="1.6" fill="none"/>
+    <path d="M254,460 C274,520 244,570 269,630" stroke="#827D6A" stroke-width="1.1" fill="none" opacity="0.48"/>
+  </g>
+
+  <!-- short random micro-creases for crumple detail -->
+  <g opacity="0.4" filter="url(#soft2)" stroke="#827D6A" stroke-width="1" fill="none">
+    <path d="M30,150 L55,165"/>
+    <path d="M210,60 L235,78"/>
+    <path d="M305,150 L330,135"/>
+    <path d="M100,220 L125,235"/>
+    <path d="M190,320 L168,335"/>
+    <path d="M260,400 L285,415"/>
+    <path d="M45,480 L25,498"/>
+    <path d="M200,560 L225,545"/>
+    <path d="M310,500 L330,515"/>
+  </g>
+
+  <!-- vignette -->
+  <rect width="360" height="640" fill="url(#edgeShade)"/>
+
+  <!-- fine grain -->
+  <rect width="360" height="640" filter="url(#grain)" opacity="0.8"/>
+</svg>

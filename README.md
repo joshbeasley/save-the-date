@@ -1,66 +1,62 @@
-# Josh & Laura Lee — Save the Date
+# Josh & Laura — Save the Date
 
-**August 21, 2027 · Old Lyme, Connecticut**
+**August 21, 2027 · 5 PM**
 
-Digital save-the-date. Single page, no build step, deploys to GitHub Pages.
+A single-page, animated save-the-date invitation styled as a tactile paper-collage poster. Plain static HTML/CSS/JS, no build step, no framework — deploys straight to GitHub Pages.
 
 ---
 
 ## Running locally
 
-Open `index.html` via a local server — loading it directly from the filesystem (`file://`) can cause font-loading issues with Google Fonts.
+Open `index.html` via a local server — loading it directly from the filesystem (`file://`) can cause local font-loading issues in some browsers.
 
 ```bash
 python3 -m http.server 8000
 # then open http://localhost:8000
 ```
 
----
-
-## Config
-
-Everything you'll need to change lives at the very top of `script.js`:
-
-```js
-// ─── CONFIG ────────────────────────────────────────────────
-const WEDDING_DATE     = new Date('2027-08-21T16:00:00-04:00');
-const ADDRESS_FORM_URL = '#'; // ← paste Google Form share link here
-// ───────────────────────────────────────────────────────────
-```
-
-- **`WEDDING_DATE`** — Hardcoded with UTC offset so all time zones count down to the same moment (4 PM EDT). Update if ceremony time changes.
-- **`ADDRESS_FORM_URL`** — Create a Google Form (Full name · Email · Street · City · State · ZIP · Country), open the share/prefill link, and paste it here. The button will open it in a new tab.
+There is no build step; the files in the repo root are the production output.
 
 ---
 
-## Swapping photos
+## Where to edit content
 
-Replace the two files in `assets/`:
+All visible copy (names, date, time, headline) lives directly in `index.html` inside `<article class="poster">`. There's no config file or template — edit the text nodes in place:
 
+- Headline lines (`SAVE` / `THE` / `DATE`) — the three `.headline-line` spans.
+- Names — the two `.name-line` spans ("Josh" / "& Laura").
+- Date/time — the `.td-group` block, plus the screen-reader-only `<time datetime="2027-08-21">` element right after it. Keep both in sync if the date or time ever changes.
+- `<title>` and the `<meta name="description">` / Open Graph / Twitter tags at the top of `<head>`.
+
+## Where to replace the photo
+
+Swap the `src` on the single `<img id="couple-photo">` element in `index.html` (inside `.photo-aperture`):
+
+```html
+<img id="couple-photo" class="photo-img" src="assets/photo-placeholder.svg" ...>
 ```
-assets/photo-1.jpg   ← 4:5 portrait (e.g. 800 × 1000 px)
-assets/photo-2.jpg   ← 4:5 portrait (e.g. 800 × 1000 px)
-```
 
-**Rules:**
-- Keep the same filenames — nothing else needs to change.
-- 4:5 portrait aspect ratio (e.g. 800 × 1000 px). Other ratios will be cropped to fit.
-- Max 1200 px on the long edge; JPEG quality ~80 keeps weight low.
-- Color or black-and-white — `filter: grayscale(100%) contrast(1.05)` is applied automatically in CSS, so color photos render in black-and-white automatically.
+Point `src` at a real photo (e.g. `assets/couple.jpg`). Notes:
+- The image is shown with `object-fit: cover` inside a fixed portrait aperture; adjust the inline `object-position` style on the same tag to change the crop focus (default is centered, `50% 50%`).
+- A `grayscale(100%) contrast(1.05)` filter is applied in `styles.css` (`.photo-img`), so a full-color photo will automatically render in the poster's monochrome style — no layout changes needed.
+- The `onerror` handler on the tag falls back to `assets/photo-placeholder.svg` automatically if the new image fails to load, so the poster never shows a broken-image icon.
+- `assets/photo-1.jpg` and `assets/photo-2.jpg` are real photos left over from the previous design; they are no longer referenced anywhere and can be deleted or reused as you like.
 
-For the OG preview image (`assets/og-image.jpg`), replace with a 1200 × 630 JPEG. The current placeholder is a solid-color swatch; any image with the names and date will look better when the link is shared.
+## Where animation timings live
+
+The entrance sequence is driven entirely by CSS (`styles.css`, "Entrance animation" section) — each animated element has a `[data-anim="..."]` attribute, and its reveal timing is set via `transition-delay`/`transition-duration` on `.poster.is-playing [data-anim="..."]`. `script.js` only toggles the `.is-playing` class (once on load, and again on each "Replay animation" click) — it contains no timing values itself.
+
+To change timing, edit the `transition` lines in that CSS section. To change the poster's layout/positions, edit the `cqw`/`cqh` values in the per-layer rules (`.photo-frame`, `.headline`, `.names-strip`, `.timedate`) — they're derived from a 360×640 reference grid documented in a comment at the top of the file.
 
 ---
 
 ## Deployment — GitHub Pages
 
-1. Push this directory to a GitHub repo (public or private).
-2. **Settings → Pages → Source:** Deploy from a branch → `main` → `/ (root)`.
-3. Site goes live at `https://<username>.github.io/<repo-name>/`.
+This repo's existing Pages setup is unchanged:
 
-All asset paths are **relative** (`assets/photo-1.jpg`, not `/assets/...`) so the site works on a project page URL without any changes.
-
-**Custom domain (optional):** Add a `CNAME` file at the root containing only the bare domain (e.g. `joshandlauralee.com`), then point the domain's DNS to GitHub Pages' IPs. See [GitHub docs](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site).
+- `CNAME` (custom domain) and `.nojekyll` are preserved at the repo root.
+- All asset paths are **relative** (`assets/...`, not `/assets/...`), so the site works whether it's served from a custom domain root or a GitHub Pages project subdirectory.
+- No routing, server, or build step is required — push the updated files and Pages serves them as-is.
 
 ---
 
@@ -68,12 +64,24 @@ All asset paths are **relative** (`assets/photo-1.jpg`, not `/assets/...`) so th
 
 ```
 /
-├── index.html       main page (all SVG inline)
-├── styles.css       design tokens + all styles
-├── script.js        countdown + animation + config
-├── .nojekyll        prevents GitHub Pages from running Jekyll
+├── index.html                       poster markup (progressive enhancement: fully readable without JS)
+├── styles.css                       design tokens, layout, paper texture, animation
+├── script.js                        entrance-animation + replay controller (no timing values)
+├── .nojekyll                        prevents GitHub Pages from running Jekyll
+├── CNAME                            custom domain
 └── assets/
-    ├── photo-1.jpg  still life photo A (replace with real photo)
-    ├── photo-2.jpg  still life photo B (replace with real photo)
-    └── og-image.jpg link preview image (replace with real image)
+    ├── fonts/
+    │   ├── anton-latin.woff2        headline + date/time typeface
+    │   └── pinyon-script-latin.woff2  script name typeface
+    ├── paper-texture.svg            generated crumpled-paper background
+    ├── paper-grain.svg              fine grain overlay (frame + name strip)
+    ├── photo-placeholder.svg        "Photo coming soon" placeholder — see above to replace
+    ├── og-image.jpg                 link-preview image (placeholder; replace with a real 1200×630 image)
+    └── photo-1.jpg, photo-2.jpg     unused leftovers from the previous design
 ```
+
+---
+
+## Notes on fonts
+
+Anton and Pinyon Script are both licensed under the SIL Open Font License and are vendored locally as `.woff2` files under `assets/fonts/` (downloaded from Google Fonts) — no external font requests at runtime. If a browser can't load them for any reason, `styles.css` falls back to `'Arial Narrow', sans-serif` for the headline/date-time and `'Brush Script MT', cursive` for the names.

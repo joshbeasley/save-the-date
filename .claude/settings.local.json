@@ -16,7 +16,12 @@
       "Bash(sed -i '' 's/Laura Lee \\\\& Josh/Josh \\\\& Laura Lee/g' /Users/joshuabeasley/Projects/ClaudeWorkspace/wedding-website/README.md)",
       "Bash(pkill -f \"python3 -m http.server 8000\")",
       "Bash(PLAYWRIGHT_BROWSERS_PATH=/Users/joshuabeasley/.npm/_npx/e41f203b7505f1fb/node_modules/playwright node *)",
-      "Bash(PLAYWRIGHT_BROWSERS_PATH=/Users/joshuabeasley/Library/Caches/ms-playwright node *)"
+      "Bash(PLAYWRIGHT_BROWSERS_PATH=/Users/joshuabeasley/Library/Caches/ms-playwright node *)",
+      "Bash(file assets/*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 5 https://fonts.googleapis.com/css2?family=Anton)",
+      "Bash(echo \"exit:$?\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 5 \"https://fonts.googleapis.com/css2?family=Anton\")",
+      "Bash(cd *)"
     ]
   }
 }

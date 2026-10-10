@@ -1,992 +1,598 @@
-/* ============================================================
-   Josh & Laura Lee — Save the Date
-   August 21, 2027 · Old Lyme, Connecticut
-   ============================================================ */
+/* ───────────────────────────────────────────────────────────
+   Josh & Laura — Save the Date
+   Paper-collage invitation poster.
 
-/* ── 1. Tokens ─────────────────────────────────────────────── */
-:root {
-  /* Ground */
-  --deep:        #123842;
-  --deep-shade:  #0C272E;
-  --deep-lift:   #1A4A55;
+   Coordinate system: all layer positions below are derived from a
+   360 × 640 reference poster (see comments) and expressed as container
+   query units (cqw = % of poster width, cqh = % of poster height) so
+   the whole composition scales fluidly with the poster's real size.
+   Animation timings live in the "Entrance animation" section, keyed to
+   each element's [data-anim] attribute (see script.js).
+   ─────────────────────────────────────────────────────────── */
 
-  /* Paper */
-  --cream:       #F5F0E5;
-  --cream-shade: #E7DECB;
-  --cream-deep:  #D9CDB4;
-
-  /* Accents */
-  --sand:        #DCC9AE;
-  --coral:       #C4705C;
-  --coral-deep:  #A85944;
-  --marsh:       #8DA57F;
-  --marsh-pale:  #B4C4A4;
-  --brass:       #B08D57;
-
-  /* Type on dark */
-  --ink-on-deep:      #F2EBDD;
-  --ink-on-deep-soft: rgba(242, 235, 221, 0.72);
-
-  /* Type on light */
-  --ink-on-cream:      #123842;
-  --ink-on-cream-soft: rgba(18, 56, 66, 0.68);
-
-  /* Motion */
-  --ease-out-soft:    cubic-bezier(0.22, 0.61, 0.36, 1);
-  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-paper:       cubic-bezier(0.34, 1.26, 0.64, 1);
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fonts/anton-latin.woff2') format('woff2');
 }
 
-/* ── 2. Reset ──────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
+@font-face {
+  font-family: 'Waterfall';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fonts/waterfall-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+  src: url('assets/fonts/roboto-slab-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('assets/fonts/playfair-display-latin-700.woff2') format('woff2');
+}
+
+:root {
+  --page-bg: #F1F0EC;
+  --poster-base: #DEDCD2;
+  --paper-light: #F5F4EE;
+  --ink: #11110F;
+  --ink-muted: #66645E;
+
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --poster-width: min(92vw, 420px);
+  --poster-radius: clamp(8px, 2.4cqw, 12px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
   margin: 0;
   padding: 0;
 }
 
-html {
-  height: 100%;
-}
-
-html.scroll-locked {
-  overflow: hidden;
-}
-
 body {
-  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-  background: var(--deep);
-  color: var(--ink-on-deep);
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
-img {
-  display: block;
-  max-width: 100%;
-}
-
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font: inherit;
-  color: inherit;
-}
-
-/* ── 3. Gate Scene ─────────────────────────────────────────── */
-.gate {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.9rem, 2.5vw, 1.5rem);
-  padding: 2rem 1rem;
-  background: radial-gradient(
-    ellipse 70% 65% at 50% 52%,
-    var(--deep-lift) 0%,
-    var(--deep) 55%,
-    var(--deep-shade) 100%
-  );
-}
-
-.gate.is-hidden {
-  display: none;
-}
-
-/* Gate opening crossfade */
-.gate.is-opening {
-  animation: gate-bg-out 750ms var(--ease-in-out-soft) 1250ms forwards;
-}
-
-@keyframes gate-bg-out {
-  to { opacity: 0; }
-}
-
-/* ── 4. Gate Typography ────────────────────────────────────── */
-.gate-eyebrow {
-  font-size: clamp(0.62rem, 1.6vw, 0.78rem);
-  font-weight: 400;
-  color: var(--ink-on-deep-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.28em;
-  text-indent: 0.28em;
-  opacity: 0;
-  transform: translateY(12px);
-  animation: fade-up 900ms var(--ease-out-soft) 200ms forwards;
-}
-
-.gate-names {
-  font-family: 'Pinyon Script', 'Parisienne', cursive;
-  font-size: clamp(2.6rem, 11vw, 5.5rem);
-  font-weight: 400;
-  color: var(--ink-on-deep);
-  line-height: 1.3;
-  padding: 0.3em 0.4em 0.5em;
-  overflow: visible;
-  position: relative;
-  z-index: 1;
-  opacity: 0;
-  transform: translateY(12px);
-  animation: fade-up 1100ms var(--ease-out-soft) 500ms forwards;
-}
-
-.gate-prompt {
-  font-size: clamp(0.58rem, 1.5vw, 0.72rem);
-  font-weight: 400;
-  color: var(--ink-on-deep-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.28em;
-  text-indent: 0.28em;
-  opacity: 0;
-  transform: translateY(12px);
-}
-
-.gate-prompt.is-visible {
-  opacity: 0.7;
-  transform: translateY(0);
-  transition: opacity 800ms var(--ease-out-soft), transform 800ms var(--ease-out-soft);
-}
-
-.gate-prompt.is-pulsing {
-  animation: prompt-pulse 2.6s ease-in-out infinite;
-}
-
-.gate-prompt.is-urgent {
-  animation: prompt-pulse-deep 2.6s ease-in-out infinite;
-}
-
-@keyframes fade-up {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes prompt-pulse {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 1; }
-}
-
-@keyframes prompt-pulse-deep {
-  0%, 100% { opacity: 0.28; transform: translateY(0); }
-  50% { opacity: 1; transform: translateY(-3px); }
-}
-
-/* Gate text out during opening sequence */
-.gate.is-opening .gate-eyebrow {
-  animation: gate-text-out 350ms var(--ease-in-out-soft) 0ms both;
-}
-.gate.is-opening .gate-names {
-  animation: gate-text-out 350ms var(--ease-in-out-soft) 80ms both;
-}
-.gate.is-opening .gate-prompt {
-  animation: gate-text-out 200ms var(--ease-out-soft) 0ms both;
-}
-
-@keyframes gate-text-out {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(-16px); }
-}
-
-/* ── 5. Envelope Wrapper ───────────────────────────────────── */
-.gate-envelope-wrap {
-  opacity: 0;
-  transform: translateY(12px);
-  animation: fade-up 1000ms var(--ease-out-soft) 900ms forwards;
-}
-
-.gate-envelope-wrap.is-wiggling {
-  animation: env-wiggle 600ms var(--ease-out-soft);
-}
-
-@keyframes env-wiggle {
-  0%   { transform: rotate(0deg); }
-  25%  { transform: rotate(-1.5deg); }
-  75%  { transform: rotate(1.5deg); }
-  100% { transform: rotate(0deg); }
-}
-
-.gate-envelope {
-  display: block;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-.gate-envelope:focus-visible {
-  outline: 2px solid var(--brass);
-  outline-offset: 8px;
-  border-radius: 4px;
-}
-
-/* Programmatically-focused elements (tabindex="-1") are for screen-reader
-   placement only — suppress the visual focus ring. */
-[tabindex="-1"]:focus {
-  outline: none;
-}
-
-/* ── 6. Envelope 3D Structure ──────────────────────────────── */
-.env-stage {
-  perspective: 1000px;
-  perspective-origin: 50% 30%;
-  width: min(78vw, 340px);
-  aspect-ratio: 1.45 / 1;
-  position: relative;
-}
-
-.env-scene {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transform: scale(1) translateY(0) translateZ(0);
-}
-
-/* Hover lift — pointer devices only, not during animation */
-@media (hover: hover) {
-  .gate-envelope:hover:not(:disabled) .env-scene {
-    transform: translateY(-4px) scale(1.015);
-    filter: drop-shadow(0 22px 44px rgba(0, 0, 0, 0.55));
-    transition: transform 400ms var(--ease-out-soft),
-                filter 400ms var(--ease-out-soft);
-  }
-}
-
-.env-back,
-.env-liner,
-.env-body,
-.env-flap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* Back panel — no overflow:hidden inside preserve-3d (breaks Safari 3D) */
-.env-back {
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
-}
-
-.env-back-shape {
-  width: 100%;
-  height: 100%;
-}
-
-/* Interior lace liner — no overflow:hidden for same reason */
-.env-liner {
-  opacity: 0;
-  transform: translateZ(0.5px);
-}
-
-/* Envelope body — V-shaped pocket front */
-.env-body {
-  transform: translateZ(2px);
-  overflow: visible;
-}
-
-/* Shadow overlay on env-body — sweeps as flap opens */
-.env-shadow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  transform: translateZ(2.5px);
-  opacity: 0;
-  /* no border-radius — inside preserve-3d context */
-}
-
-/* Flap — the rotating piece */
-.env-flap {
-  height: 58%;
-  bottom: auto;
-  transform-origin: top center;
-  transform-style: preserve-3d;
-  transform: translateZ(3px);
-}
-
-.env-flap-front,
-.env-flap-back {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.env-flap-back {
-  transform: rotateY(180deg);
-}
-
-/* Monogram on flap */
-.env-monogram {
-  position: absolute;
-  top: 34%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'Pinyon Script', 'Parisienne', cursive;
-  font-size: clamp(1.1rem, 3.8vw, 1.6rem);
-  color: var(--ink-on-cream-soft);
-  pointer-events: none;
-  z-index: 1;
-  line-height: 1;
-}
-
-/* Ribbon bow */
-.env-bow {
-  position: absolute;
-  bottom: 16%;
-  right: 10%;
-  width: clamp(28px, 9vw, 40px);
-  height: clamp(28px, 9vw, 40px);
-  transform: rotate(-20deg);
-  transform-origin: center;
-  overflow: visible;
-  transform: translateZ(4px) rotate(-20deg);
-}
-
-/* ── 7. Envelope Opening Animation (1600ms total) ── */
-
-/* Scene: hold, then smooth zoom approach from 600ms */
-.gate.is-opening .env-scene {
-  animation: env-scene-open 2000ms linear forwards;
-  will-change: transform;
-}
-
-@keyframes env-scene-open {
-  0%      { transform: scale(1)   translateY(0)   translateZ(0);
-            animation-timing-function: linear; }
-  37.5%   { transform: scale(1)   translateY(0)   translateZ(0);
-            animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
-  93.75%  { transform: scale(5.2) translateY(-4%) translateZ(0); }
-  100%    { transform: scale(5.2) translateY(-4%) translateZ(0); }
-}
-
-/* Flap opens 0–1250ms */
-.gate.is-opening .env-flap {
-  animation: env-flap-open 2000ms linear forwards;
-  will-change: transform;
-}
-
-@keyframes env-flap-open {
-  0%    { transform: rotateX(0deg)   translateZ(3px);
-          animation-timing-function: cubic-bezier(0.45, 0, 0.35, 1); }
-  62.5% { transform: rotateX(168deg) translateZ(3px); }
-  100%  { transform: rotateX(168deg) translateZ(3px); }
-}
-
-/* Liner reveals 0–500ms */
-.gate.is-opening .env-liner {
-  animation: env-liner-reveal 2000ms linear forwards;
-}
-
-@keyframes env-liner-reveal {
-  0%     { opacity: 0; }
-  31.25% { opacity: 1; }
-  100%   { opacity: 1; }
-}
-
-/* Bow releases 0–520ms */
-.gate.is-opening .env-bow {
-  animation: env-bow-release 2000ms linear forwards;
-}
-
-@keyframes env-bow-release {
-  0%    { transform: translateZ(4px) rotate(-20deg) scale(1)   translateY(0px);  opacity: 1;
-          animation-timing-function: var(--ease-out-soft); }
-  32.5% { transform: translateZ(4px) rotate(-55deg) scale(0.4) translateY(14px); opacity: 0; }
-  100%  { transform: translateZ(4px) rotate(-55deg) scale(0.4) translateY(14px); opacity: 0; }
-}
-
-/* Shadow sweeps 100–1000ms */
-.gate.is-opening .env-shadow {
-  animation: env-shadow-sweep 2000ms linear forwards;
-}
-
-@keyframes env-shadow-sweep {
-  0%     { opacity: 0; }
-  6.25%  { opacity: 0.3; }
-  62.5%  { opacity: 0; }
-  100%   { opacity: 0; }
-}
-
-/* ── 8. Card Scene ─────────────────────────────────────────── */
-.card-scene {
+.stage {
   min-height: 100vh;
-  min-height: 100svh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(0.8rem, 2vw, 1.4rem);
-  padding: clamp(2rem, 5vw, 4rem) 1rem clamp(2rem, 4vw, 3.5rem);
-  background: var(--deep);
+  gap: 1.25rem;
+  padding: max(2rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+           max(2rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+}
+
+/* ─── Poster ─────────────────────────────────────────────── */
+
+.poster {
   position: relative;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.card-scene.is-revealed {
-  opacity: 1;
-  pointer-events: auto;
-  animation: scene-fade-in 400ms var(--ease-out-soft) forwards;
-}
-
-@keyframes scene-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Card typography — all start hidden for stagger reveal */
-.card-eyebrow {
-  font-size: clamp(0.8rem, 2.6vw, 1.05rem);
-  font-weight: 400;
-  color: var(--ink-on-deep-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  text-indent: 0.22em;
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.card-names {
-  font-family: 'Pinyon Script', 'Parisienne', cursive;
-  font-size: clamp(2.4rem, 10vw, 5rem);
-  font-weight: 400;
-  color: var(--ink-on-deep);
-  line-height: 1.3;
-  padding: 0.3em 0.4em 0.5em;
-  overflow: visible;
-  position: relative;
-  z-index: 1;
-  opacity: 0;
-  transform: translateY(14px);
-}
-
-.card-footer {
-  text-align: center;
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.card-location,
-.card-date {
-  font-size: clamp(0.92rem, 3vw, 1.2rem);
-  font-weight: 400;
-  color: var(--ink-on-deep-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  text-indent: 0.2em;
-  line-height: 2;
-}
-
-.card-formal {
-  font-family: 'Pinyon Script', 'Parisienne', cursive;
-  font-size: clamp(1.25rem, 4.5vw, 1.9rem);
-  color: var(--ink-on-deep);
-  line-height: 1.3;
-  padding: 0.1em 0;
-}
-
-/* Card staggered reveal */
-.card-scene.is-revealed .card-eyebrow {
-  animation: fade-up 700ms var(--ease-out-soft) 0ms forwards;
-}
-.card-scene.is-revealed .card-names {
-  animation: fade-up 900ms var(--ease-out-soft) 150ms forwards;
-}
-.card-scene.is-revealed .card-footer {
-  animation: fade-up 900ms var(--ease-out-soft) 1500ms forwards;
-}
-
-/* ── 9. Still Life ─────────────────────────────────────────── */
-.still-life {
-  position: relative;
-  width: min(92vw, 480px);
-  aspect-ratio: 1 / 1.15;
-}
-
-/* z0 — envelope back panel */
-.sl-back {
-  position: absolute;
-  inset: 5% 7%;
-  background: var(--cream-shade);
-  border-radius: 3px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.38);
-}
-
-/* z1 — open flap with lace */
-.sl-flap-open {
-  position: absolute;
-  top: 0;
-  left: 4%;
-  right: 4%;
-  height: 44%;
-  z-index: 1;
-  opacity: 0;
-  transform: scale(0.96);
-}
-
-/* z2 — greenery */
-.sl-greenery {
-  position: absolute;
-  top: -8%;
-  left: 0;
-  right: 0;
-  height: 65%;
-  z-index: 2;
-  opacity: 0;
-  transform: scale(0.96);
-  pointer-events: none;
-}
-
-/* z3 & z4 — photos */
-.sl-photo {
-  position: absolute;
-  border: 7px solid var(--cream);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.32);
+  width: var(--poster-width);
+  aspect-ratio: 9 / 16;
+  container-type: size;
+  container-name: poster;
   overflow: hidden;
-  z-index: 3;
-  opacity: 0;
+  border-radius: var(--poster-radius);
+  background: var(--poster-base);
+  box-shadow: 0 10px 28px rgba(17, 17, 15, 0.16), 0 2px 6px rgba(17, 17, 15, 0.08);
+  isolation: isolate;
 }
 
-.sl-photo img {
+.layer {
+  position: absolute;
+  inset: 0;
+}
+
+/* ─── Paper background ──────────────────────────────────── */
+
+.paper-bg {
+  background-color: var(--poster-base);
+  background-image: url('assets/paper-texture-photo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Multiply tints the photo's bright whites toward the warm ivory
+     palette while keeping its fold/shadow detail intact. */
+  background-blend-mode: multiply;
+  z-index: 1;
+}
+
+/* ─── Photo + frame ──────────────────────────────────────── */
+/* reference: x 38 y 55 w 282 h 385 of 360×640 */
+
+.photo-layer {
+  z-index: 2;
+}
+
+.photo-frame {
+  position: absolute;
+  left: 10.556cqw;
+  top: 8.594cqh;
+  width: 78.333cqw;
+  height: 60.156cqh;
+  background: var(--paper-light);
+  background-image: url('assets/paper-grain.svg');
+  background-size: 180px 180px;
+  background-blend-mode: multiply;
+  box-shadow: 0 1px 3px rgba(17, 17, 15, 0.10), 0 6px 14px rgba(17, 17, 15, 0.08);
+  border-radius: 2px;
+}
+
+/* aperture: x 43 y 61 w 272 h 314 -> offsets within the frame */
+.photo-aperture {
+  position: absolute;
+  left: 1.773%;
+  top: 1.558%;
+  width: 96.454%;
+  height: 81.558%;
+  overflow: hidden;
+  background: #87857d;
+}
+
+.photo-img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: grayscale(100%) contrast(1.05);
 }
 
-.sl-photo-a {
-  width: 41%;
-  aspect-ratio: 4 / 5;
-  left: 5%;
-  top: 12%;
-  transform: rotate(-4deg) translateY(40px);
+/* ─── Headline ───────────────────────────────────────────── */
+/* reference: x 38 y 385 w 160 h 195 */
+
+.headline {
   z-index: 3;
-}
-
-.sl-photo-b {
-  width: 41%;
-  aspect-ratio: 4 / 5;
-  left: 11%;
-  top: 33%;
-  transform: rotate(3deg) translateY(40px);
-  z-index: 4;
-}
-
-/* z5 — the card */
-.sl-card {
-  position: absolute;
-  right: 4%;
-  top: 7%;
-  width: 52%;
-  height: 67%;
-  background: var(--cream);
-  border-radius: 40% 40% 3px 3px / 8% 8% 3px 3px;
+  left: 10.556cqw;
+  top: 60.156cqh;
+  width: 44.444cqw;
+  height: 30.469cqh;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: flex-start;
-  padding-top: 18%;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16);
-  z-index: 5;
-  opacity: 0;
-  transform: translateY(30px);
 }
 
-.sl-card-script {
-  font-family: 'Pinyon Script', 'Parisienne', cursive;
-  font-size: clamp(1.6rem, 6vw, 2.6rem);
-  color: var(--ink-on-cream);
-  line-height: 1.1;
-  padding: 0.2em 0.3em 0.3em;
-  overflow: visible;
-  text-align: center;
+.headline-line {
+  font-family: 'Anton', 'Arial Narrow', sans-serif;
+  font-weight: 400;
+  font-size: 16.4cqw;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-transform: uppercase;
 }
 
-/* z6 — pocket front */
-.sl-pocket {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 43%;
-  z-index: 6;
-  opacity: 0;
-  overflow: hidden;
+/* ─── Torn names strip ───────────────────────────────────── */
+/* reference: x 190 y 398 w 200 h 107 (extends past right edge, clipped by .poster) */
+
+.names-strip {
+  z-index: 4;
+  left: 52.778cqw;
+  top: 62.188cqh;
+  width: 55.556cqw;
+  height: 16.719cqh;
 }
 
-/* z7 — seal */
-.sl-seal {
-  position: absolute;
-  width: 50%;
-  aspect-ratio: 1;
-  right: 7%;
-  top: 57%;
-  transform: translateY(-50%) scale(0.7);
-  transform-origin: center;
-  z-index: 7;
-  opacity: 0;
-}
-
-.seal-text-overlay {
+.strip-paper {
   position: absolute;
   inset: 0;
+  background: var(--paper-light);
+  background-image: url('assets/paper-grain.svg');
+  background-size: 140px 140px;
+  background-blend-mode: multiply;
+  filter: drop-shadow(0 2px 4px rgba(17, 17, 15, 0.12));
+  clip-path: polygon(
+    100% 0%,
+    7% 0%, 3% 4%, 9% 7%, 4% 11%, 10% 15%,
+    5% 20%, 11% 25%, 6% 31%, 12% 37%, 7% 43%,
+    13% 49%, 8% 56%, 12% 62%, 7% 68%, 13% 74%,
+    8% 80%, 11% 85%, 5% 90%, 10% 95%, 4% 100%,
+    100% 100%
+  );
+}
+
+.strip-text {
+  position: absolute;
+  inset: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: 0.2em;
-  padding: 22% 8%;
+  padding-left: 20%;
+  font-family: 'Waterfall', 'Brush Script MT', cursive;
+  font-size: 10.5cqw;
+  line-height: 1.25;
+  color: var(--ink);
 }
 
-.seal-text-overlay p {
-  font-size: clamp(0.72rem, 2.5vw, 1rem);
-  color: var(--cream);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  text-indent: 0.12em;
-  font-weight: 400;
+.name-line { display: block; }
+
+/* ─── Time / date ────────────────────────────────────────── */
+/* reference: x 190 y 518 w 170 h 60 — tucked right under the names strip */
+
+.timedate {
+  z-index: 5;
+  left: 52.778cqw;
+  top: 80.938cqh;
+  width: 47.222cqw;
+  height: 9.375cqh;
+}
+
+.td-group {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 5%;
+}
+
+.td-col {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.95;
+}
+
+/* Both rows of each column share one size/weight/color — the video
+   reference has no big/small hierarchy here, just two equal lines. */
+.td-line {
+  font-family: 'Roboto Slab', Georgia, serif;
+  font-weight: 900;
+  font-size: 7.6cqw;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.td-sep {
+  width: 2px;
+  align-self: stretch;
+  background: var(--ink);
+  opacity: 0.9;
+}
+
+/* ─── Location ───────────────────────────────────────────── */
+/* Sits under the headline's last line, in the leftover space beside the
+   time/date block — bottom-anchored (top:auto + bottom) so its baseline
+   lines up with the bottom of the time/date text rather than the box
+   below it, instead of being pinned from the top with a growing gap. */
+
+.location-line {
+  z-index: 5;
+  left: 10.556cqw;
+  top: auto;
+  bottom: 9.69cqh;
+  width: 40cqw;
+  margin: 0;
+  text-align: left;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: 3.4cqw;
   line-height: 1.15;
-  text-align: center;
-  white-space: nowrap;
+  letter-spacing: 0.01em;
+  color: var(--ink);
 }
 
-/* z8 — monogram on pocket */
-.sl-monogram {
-  position: absolute;
-  font-family: 'Pinyon Script', 'Parisienne', cursive;
-  font-size: clamp(1.3rem, 5vw, 2rem);
-  color: var(--ink-on-cream-soft);
-  left: 50%;
-  bottom: 6%;
-  transform: translateX(-50%);
-  z-index: 8;
-  pointer-events: none;
-  opacity: 0;
-}
+/* ─── Replay control ─────────────────────────────────────── */
 
-/* Still life reveal stagger */
-.card-scene.is-revealed .sl-flap-open,
-.card-scene.is-revealed .sl-greenery {
-  animation: sl-scale-in 800ms var(--ease-out-soft) 400ms forwards;
-}
-.card-scene.is-revealed .sl-photo-a {
-  animation: sl-photo-a-rise 700ms var(--ease-out-soft) 650ms forwards;
-}
-.card-scene.is-revealed .sl-photo-b {
-  animation: sl-photo-b-rise 700ms var(--ease-out-soft) 780ms forwards;
-}
-.card-scene.is-revealed .sl-card {
-  animation: sl-rise 700ms var(--ease-out-soft) 900ms forwards;
-}
-.card-scene.is-revealed .sl-pocket {
-  animation: sl-fade 500ms var(--ease-out-soft) 1000ms forwards;
-}
-.card-scene.is-revealed .sl-monogram {
-  animation: sl-fade 500ms var(--ease-out-soft) 1000ms forwards;
-}
-.card-scene.is-revealed .sl-seal {
-  animation: sl-seal-pop 600ms var(--ease-paper) 1200ms forwards;
-}
-
-@keyframes sl-scale-in {
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes sl-photo-a-rise {
-  to { opacity: 1; transform: rotate(-4deg) translateY(0); }
-}
-@keyframes sl-photo-b-rise {
-  to { opacity: 1; transform: rotate(3deg) translateY(0); }
-}
-@keyframes sl-rise {
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes sl-fade {
-  to { opacity: 1; }
-}
-@keyframes sl-seal-pop {
-  to { opacity: 1; transform: translateY(-50%) scale(1); }
-}
-
-/* ── 10. Scroll Hint ───────────────────────────────────────── */
-.scroll-hint {
-  position: absolute;
-  bottom: clamp(1rem, 2.5vw, 1.8rem);
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.card-scene.is-revealed .scroll-hint {
-  animation: sl-fade 600ms var(--ease-out-soft) 2800ms forwards;
-}
-
-.scroll-hint-line {
-  width: 1px;
-  height: 28px;
-  background: var(--brass);
-  opacity: 0.5;
-  animation: scroll-line-pulse 2.4s ease-in-out 3400ms infinite;
-}
-
-@keyframes scroll-line-pulse {
-  0%, 100% { transform: scaleY(1); opacity: 0.5; }
-  50%       { transform: scaleY(1.3); opacity: 0.9; }
-}
-
-.scroll-hint svg {
-  width: 14px;
-  height: 8px;
-  stroke: var(--brass);
-  fill: none;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.7;
-}
-
-/* ── 11. Countdown Section ─────────────────────────────────── */
-.countdown-section {
-  background: var(--cream);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: clamp(1.5rem, 3.5vw, 2.5rem);
-  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem clamp(4rem, 9vw, 7rem);
-}
-
-.countdown-heading {
-  font-size: clamp(0.82rem, 2.5vw, 1rem);
-  font-weight: 400;
-  color: var(--ink-on-cream-soft);
+.replay-btn {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  text-indent: 0.22em;
+  color: var(--ink-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 12px 16px;
+  min-height: 44px;
+  min-width: 44px;
+  border-radius: 6px;
+}
+
+.replay-btn:hover { color: var(--ink); }
+
+.replay-btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.replay-btn[hidden] { display: none; }
+
+/* ─── Accessibility utility ──────────────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── Entrance animation ─────────────────────────────────────
+   Default state (no JS, or JS present but <html> lacks
+   .anim-armed): everything is fully visible, no transforms.
+   This is the complete, readable composition — the page never
+   depends on JavaScript or animation to convey information.
+
+   When <html class="anim-armed"> is present (set synchronously
+   by the inline script in index.html, skipped entirely under
+   prefers-reduced-motion), the elements below start from an
+   off-state. Adding .is-playing to .poster (script.js) then
+   transitions each one to its final state; transition-delay
+   staggers the reveal per the timing table in the brief.
+   ─────────────────────────────────────────────────────────── */
+
+/* Every [data-anim] element starts hidden. Location has no opacity
+   transition defined below (only clip-path), so its opacity just
+   jumps straight to 1 the instant .is-playing is added — it stays
+   invisible until its clip-path reveal starts, same practical effect
+   as a fade would have had, without fighting the override's
+   specificity (an earlier :not() exclusion here briefly broke the
+   opacity:1 override for every element — do not reintroduce it). */
+html.anim-armed [data-anim] {
+  opacity: 0;
+}
+
+/* Findings from frame-by-frame pixel analysis of the reference video
+   (ffmpeg → numpy, tracking sub-pixel glyph edges over time), which
+   corrected several wrong assumptions in earlier passes:
+     - photo + headline: fade/scale only, position stays put (no slide)
+     - names + time/date: fade AND slide straight down from above
+       (they start noticeably higher and settle down into place —
+       not a scale-from-center "pop")
+     - location: NOT a fade at all — it's a hard-edged left-to-right
+       reveal (clip-path), already fully opaque the instant any of it
+       is visible — a wipe, not a fade
+     - after the whole cascade settles, the inner content keeps a
+       slow, continuous "breathing" zoom (~4% scale, smooth ease,
+       repeating every ~5s, confirmed by matching measurements at
+       t=5.0s/10.0s to the decimal) — see the .breathe rules below
+
+   Durations here run slower than the raw video timing on purpose —
+   matched-to-the-video pacing still read as too quick in review, so
+   the whole cascade was stretched out further for a calmer feel. */
+
+html.anim-armed [data-anim="photo"] {
+  transform: scale(0.96);
+  transform-origin: center;
+}
+html.anim-armed [data-anim="headline"] {
+  transform: scale(0.93);
+  transform-origin: left center;
+}
+html.anim-armed [data-anim="strip"] {
+  transform: scale(0.95);
+  transform-origin: right center;
+}
+html.anim-armed [data-anim="names"] {
+  transform: translateY(-26px) scale(0.97);
+  transform-origin: left center;
+}
+html.anim-armed [data-anim="timedate"] {
+  transform: translateY(-26px) scale(0.97);
+  transform-origin: left center;
+}
+
+/* Location: hard clip-path wipe, left to right. Always opacity:1 —
+   revealed text is immediately fully opaque, only the mask moves.
+   Scoped to .anim-armed only, same as the opacity rules above, so the
+   default (no-JS / pre-reduced-motion-check) state is simply visible. */
+html.anim-armed .location-line {
+  clip-path: inset(0 100% 0 0);
+}
+.poster.is-playing .location-line {
+  clip-path: inset(0 0% 0 0);
+}
+
+.poster.is-playing [data-anim] {
+  opacity: 1;
+  transform: none;
+}
+
+.poster.is-playing [data-anim="photo"] {
+  transition: opacity 1300ms var(--ease-settle) 0ms,
+              transform 1300ms var(--ease-settle) 0ms;
+}
+
+.poster.is-playing [data-anim="headline"] {
+  transition: opacity 1200ms var(--ease-settle) 250ms,
+              transform 1200ms var(--ease-settle) 250ms;
+}
+
+.poster.is-playing [data-anim="strip"] {
+  transition: opacity 1100ms var(--ease-settle) 900ms,
+              transform 1100ms var(--ease-settle) 900ms;
+}
+
+.poster.is-playing [data-anim="names"] {
+  transition: opacity 1000ms var(--ease-settle) 1500ms,
+              transform 1000ms ease-out 1500ms;
+}
+
+.poster.is-playing [data-anim="timedate"] {
+  transition: opacity 950ms var(--ease-settle) 2100ms,
+              transform 950ms ease-out 2100ms;
+}
+
+.poster.is-playing .location-line {
+  transition: clip-path 1100ms ease-out 2700ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.anim-armed [data-anim] {
+    opacity: 1;
+    transform: none;
+  }
+  html.anim-armed .location-line {
+    clip-path: none;
+  }
+}
+
+/* ─── Continuous breathing zoom ──────────────────────────────
+   Added only after the entrance cascade fully completes (script.js
+   adds .breathe once the last transition ends), so it never fights
+   the entrance transitions above — its 0% keyframe matches the
+   entrance's resting scale(1), making the handoff seamless. */
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
+}
+
+.poster.breathe [data-anim="photo"],
+.poster.breathe [data-anim="headline"],
+.poster.breathe [data-anim="strip"],
+.poster.breathe [data-anim="names"],
+.poster.breathe [data-anim="timedate"] {
+  animation: breathe 5000ms ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster.breathe [data-anim] {
+    animation: none;
+  }
+}
+
+/* ─── Small-screen legibility ────────────────────────────── */
+
+@media (max-width: 340px) {
+  .headline-line { font-size: 17.5cqw; }
+  .strip-text { font-size: 11.2cqw; }
+  .td-line { font-size: 8.2cqw; }
+  .location-line { font-size: 3.8cqw; }
+}
+
+/* ─── Short / landscape viewports: allow scrolling ───────── */
+
+@media (max-height: 560px) {
+  .stage {
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+}
+
+/* ─── Join-us / countdown section ────────────────────────────
+   Lives below the poster in normal document flow (a sibling of
+   <main>, not inside the centered hero), so it simply appears as
+   the visitor scrolls down rather than competing with the poster
+   for the first viewport. */
+
+.join-section {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0 1.5rem max(3rem, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  gap: 1.1rem;
 }
 
-.countdown-today {
-  font-family: 'Pinyon Script', 'Parisienne', cursive;
-  font-size: clamp(2.5rem, 9vw, 4.5rem);
-  color: var(--ink-on-cream);
-  display: none;
+.join-heading {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.05rem, 4vw, 1.3rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
 
-.countdown-display {
+.countdown {
   display: flex;
   align-items: flex-start;
-  gap: clamp(0.4rem, 1.5vw, 1rem);
+  gap: 0.6rem;
 }
 
-.countdown-group {
+.cd-group {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  min-width: 2.6em;
 }
 
-.countdown-num {
-  font-size: clamp(1.9rem, 8vw, 3.4rem);
-  font-weight: 300;
-  color: var(--ink-on-cream);
+.cd-num {
+  font-family: 'Roboto Slab', Georgia, serif;
+  font-weight: 900;
+  font-size: clamp(1.6rem, 7vw, 2.2rem);
+  line-height: 1;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
-  line-height: 1;
-  letter-spacing: 0.04em;
 }
 
-.countdown-unit {
-  font-size: clamp(0.44rem, 1.3vw, 0.58rem);
-  font-weight: 400;
-  color: var(--ink-on-cream-soft);
+.cd-unit {
+  margin-top: 0.3em;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.28em;
-  text-indent: 0.28em;
+  color: var(--ink-muted);
 }
 
-.countdown-sep {
-  font-size: clamp(1.4rem, 6vw, 2.6rem);
-  font-weight: 300;
-  color: var(--ink-on-cream-soft);
+.cd-sep {
+  font-family: 'Roboto Slab', Georgia, serif;
+  font-weight: 900;
+  font-size: clamp(1.6rem, 7vw, 2.2rem);
   line-height: 1;
-  padding-top: 0.08em;
+  color: var(--ink-muted);
 }
 
-.countdown-body {
-  font-size: clamp(0.8rem, 2.2vw, 0.95rem);
-  font-weight: 300;
-  color: var(--ink-on-cream-soft);
-  text-align: center;
-  max-width: min(88vw, 360px);
-  line-height: 1.8;
+.join-body {
+  margin: 0;
+  max-width: 32ch;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
 }
 
 .address-btn {
   display: inline-block;
-  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-  font-size: clamp(0.6rem, 1.6vw, 0.72rem);
-  font-weight: 400;
-  color: var(--ink-on-cream);
+  margin-top: 0.3rem;
+  padding: 0.85em 1.8em;
+  min-height: 44px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.28em;
-  text-indent: 0.28em;
   text-decoration: none;
-  border: 1px solid var(--brass);
-  padding: 1rem 2.4rem;
+  color: var(--ink);
+  background: transparent;
+  border: 1.5px solid var(--ink);
   border-radius: 2px;
-  transition: background-color 300ms, color 300ms;
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 .address-btn:hover {
-  background-color: var(--brass);
-  color: var(--cream);
+  background: var(--ink);
+  color: var(--paper-light);
 }
 
 .address-btn:focus-visible {
-  outline: 2px solid var(--brass);
+  outline: 2px solid var(--ink);
   outline-offset: 3px;
-}
-
-.countdown-sig {
-  font-family: 'Pinyon Script', 'Parisienne', cursive;
-  font-size: clamp(1.9rem, 6vw, 2.8rem);
-  color: var(--ink-on-cream-soft);
-  line-height: 1.3;
-  padding: 0.3em 0.4em 0.5em;
-  overflow: visible;
-  position: relative;
-  z-index: 1;
-}
-
-/* ── 12. Footer ────────────────────────────────────────────── */
-footer {
-  background: var(--deep-shade);
-  text-align: center;
-  padding: 1.5rem;
-  font-size: 0.65rem;
-  color: var(--ink-on-deep-soft);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-/* ── 13. Responsive ─────────────────────────────────────────── */
-@media (min-width: 480px) {
-  .still-life { width: min(88vw, 480px); }
-}
-
-@media (min-width: 768px) {
-  .gate { gap: 1.8rem; }
-  .card-scene { gap: 1.8rem; }
-}
-
-@media (min-width: 1024px) {
-  .card-scene { padding: 5rem 2rem 4rem; }
-}
-
-/* ── 14. Reduced Motion ─────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  /* Entrance: resolve instantly to final state */
-  .gate-eyebrow,
-  .gate-names {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .gate-envelope-wrap {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .gate-prompt {
-    animation: none !important;
-    opacity: 0.8 !important;
-    transform: none !important;
-  }
-
-  /* Envelope: 200ms crossfade, no 3D */
-  .gate.is-opening .env-scene,
-  .gate.is-opening .env-flap,
-  .gate.is-opening .env-liner,
-  .gate.is-opening .env-bow,
-  .gate.is-opening .env-shadow {
-    animation: none !important;
-    transition: none !important;
-  }
-
-  .gate.is-opening .gate-eyebrow,
-  .gate.is-opening .gate-names,
-  .gate.is-opening .gate-prompt {
-    animation: none !important;
-  }
-
-  /* Card: all elements instantly visible */
-  .card-scene,
-  .card-scene.is-revealed {
-    animation: none !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
-
-  .card-scene.is-revealed .card-eyebrow,
-  .card-scene.is-revealed .card-names,
-  .card-scene.is-revealed .card-footer {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .card-scene.is-revealed .sl-flap-open,
-  .card-scene.is-revealed .sl-greenery {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: scale(1) !important;
-  }
-
-  .card-scene.is-revealed .sl-photo-a {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: rotate(-4deg) translateY(0) !important;
-  }
-
-  .card-scene.is-revealed .sl-photo-b {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: rotate(3deg) translateY(0) !important;
-  }
-
-  .card-scene.is-revealed .sl-card {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-  }
-
-  .card-scene.is-revealed .sl-pocket,
-  .card-scene.is-revealed .sl-monogram {
-    animation: none !important;
-    opacity: 1 !important;
-  }
-
-  .card-scene.is-revealed .sl-seal {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: translateY(-50%) scale(1) !important;
-  }
-
-  .card-scene.is-revealed .scroll-hint {
-    animation: none !important;
-    opacity: 1 !important;
-  }
-
-  .scroll-hint-line {
-    animation: none !important;
-  }
 }
