@@ -93,3 +93,90 @@
   tick();
   window.setInterval(tick, 1000);
 })();
+
+/* ───────────────────────────────────────────────────────────
+   Address form — posts guests' answers straight to the Google Form,
+   so responses land in the same Form/Sheet as before and nothing is
+   stored by this site.
+
+   Google doesn't send CORS headers, so the request goes out with
+   mode: 'no-cors': the browser sends it but can't read the reply.
+   A resolved fetch means it reached Google; only a network failure
+   rejects. Google silently drops submissions that fail its own
+   required-field checks, which is why every required field is also
+   required here (the browser blocks submit until they're filled).
+
+   If a question in the Google Form is ever deleted and re-created,
+   its entry ID changes — re-read the IDs from the form's page source
+   (FB_PUBLIC_LOAD_DATA_) and update GOOGLE_FIELDS.
+   ─────────────────────────────────────────────────────────── */
+
+(function () {
+  var FORM_URL = 'https://docs.google.com/forms/d/e/' +
+    '1FAIpQLSeGCOmk3rSDSILa9HTlV6ad56yyAqEQiuCs4XiePYVKwSg38g/formResponse';
+
+  var GOOGLE_FIELDS = {
+    first:   'entry.1903180223', // First Name
+    last:    'entry.1021533317', // Last Name
+    email:   'entry.1346440369', // Email
+    phone:   'entry.75909639',   // Phone Number
+    address: 'entry.877587661'   // Mailing Address (one field in the Google Form)
+  };
+
+  var card = document.getElementById('address-card');
+  var form = document.getElementById('address-form');
+  var fallback = document.getElementById('address-fallback');
+  var thanks = document.getElementById('af-thanks');
+  var thanksName = document.getElementById('af-thanks-name');
+  var errorEl = document.getElementById('af-error');
+
+  if (!card || !form || !window.fetch || !window.FormData) return;
+
+  // JS is available: swap the fallback link for the on-page form.
+  fallback.hidden = true;
+  form.hidden = false;
+  card.classList.add('is-ready');
+
+  function val(name) {
+    return form.elements[name].value.trim();
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+    button.textContent = 'Sending…';
+    errorEl.hidden = true;
+
+    // Fold the separate address fields into the Google Form's single
+    // "Mailing Address" answer, e.g. "12 Elm St, Apt 3, Boston, MA 02134".
+    var address = [
+      val('street'),
+      val('unit'),
+      val('city'),
+      [val('state'), val('zip')].join(' ').trim(),
+      val('country')
+    ].filter(Boolean).join(', ');
+
+    var data = new FormData();
+    data.append(GOOGLE_FIELDS.first, val('first'));
+    data.append(GOOGLE_FIELDS.last, val('last'));
+    data.append(GOOGLE_FIELDS.email, val('email'));
+    data.append(GOOGLE_FIELDS.phone, val('phone'));
+    data.append(GOOGLE_FIELDS.address, address);
+
+    fetch(FORM_URL, { method: 'POST', mode: 'no-cors', body: data })
+      .then(function () {
+        thanksName.textContent = val('first') ? ', ' + val('first') : '';
+        form.hidden = true;
+        thanks.hidden = false;
+        thanks.focus();
+      })
+      .catch(function () {
+        button.disabled = false;
+        button.textContent = 'Send';
+        errorEl.hidden = false;
+      });
+  });
+})();

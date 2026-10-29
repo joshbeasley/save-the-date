@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--
+  Template for generating assets/og-image.jpg (the link-preview image shown
+  when the site's URL is texted/shared). Not part of the live site — this is
+  a dev-only tool, rendered once with a headless browser to produce a static
+  1200x630 image, matching the names styling in the poster itself.
+
+  To regenerate after a content/style change (e.g. the names change, or the
+  photo changes):
+    1. Edit the content/styles below to match the current poster.
+    2. Screenshot it at exactly 1200x630 with a headless browser, e.g.
+       (from the repo root, with Playwright available):
+         node -e "
+           const { chromium } = require('playwright');
+           (async () => {
+             const browser = await chromium.launch();
+             const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
+             await page.goto('file://' + process.cwd() + '/tools/og-image-template.html');
+             await page.screenshot({ path: 'assets/og-image.jpg' });
+             await browser.close();
+           })();
+         "
+    3. The screenshot saves as PNG bytes even with a .jpg extension — convert
+       properly, e.g. on macOS: sips -s format jpeg -s formatOptions 85
+       assets/og-image.jpg --out assets/og-image.jpg
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face {
+  font-family: 'Anton';
+  src: url('../assets/fonts/anton-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Kaushan Script';
+  src: url('../assets/fonts/kaushan-script-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Roboto Slab';
+  font-weight: 900;
+  src: url('../assets/fonts/roboto-slab-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-weight: 700;
+  src: url('../assets/fonts/playfair-display-latin-700.woff2') format('woff2');
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 1200px;
+  height: 630px;
+  overflow: hidden;
+}
+
+.card {
+  position: relative;
+  width: 1200px;
+  height: 630px;
+  background-image: url('../assets/couple-photo.jpg');
+  background-size: cover;
+  background-position: 50% 28%;
+  filter: grayscale(100%) contrast(1.05);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17,17,15,0.88) 0%, rgba(17,17,15,0.55) 38%, rgba(17,17,15,0.05) 62%, rgba(17,17,15,0) 100%);
+}
+
+.content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #F5F4EE;
+}
+
+.headline {
+  font-family: 'Anton', sans-serif;
+  font-size: 74px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.names {
+  margin-top: 14px;
+  font-family: 'Kaushan Script', cursive;
+  font-weight: 400;
+  font-size: 54px;
+  line-height: 1;
+}
+
+.details {
+  margin-top: 18px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #D8D5C9;
+}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="headline">Save the Date</div>
+      <div class="names">Laura Wayland &amp; Josh Beasley</div>
+      <div class="details">August 21, 2027 &nbsp;·&nbsp; Old Lyme, CT</div>
+    </div>
+  </div>
+</body>
+</html>

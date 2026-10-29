@@ -55,13 +55,13 @@ To change timing, edit the `transition` lines in that CSS section (and `ENTRANCE
 Both are driven from `script.js`, in the second IIFE at the bottom of the file (separate from the entrance-animation controller):
 
 - **`WEDDING_DATE`** — a single `Date` constant with a UTC offset (`2027-08-21T17:00:00-04:00`), so every visitor's countdown reaches zero at the same real moment regardless of their timezone. This is independent of the poster's "5 PM", which stays literal display text per the design brief.
-- **Address button** — `<a id="address-btn">` in `index.html` links to the Google Form share link (`https://forms.gle/V6bKL78ozwmJopm16`); opens in a new tab (`target="_blank" rel="noopener noreferrer"`). Update the `href` there if the form URL ever changes.
+- **Address form** — an on-page form (`#address-form` in `index.html`) that posts straight to the Google Form's `formResponse` endpoint, so responses land in the same Google Form/Sheet and nothing is stored by the site. The mapping from page fields to the Google Form's `entry.*` IDs is `GOOGLE_FIELDS` in `script.js` ("Address form" section); the street/unit/city/state/ZIP/country fields are combined into the form's single Mailing Address answer. If a Google Form question is deleted and re-created its entry ID changes and must be updated there. Without JavaScript, a plain link to `https://forms.gle/V6bKL78ozwmJopm16` shows instead.
 
 ---
 
 ## Link previews (texting/sharing the URL)
 
-When the link is pasted into iMessage, SMS, Slack, etc., the preview card comes from the Open Graph tags in `index.html`'s `<head>` (`og:title`, `og:description`, `og:image`, `og:url`) plus the matching `twitter:*` tags. `og-image.jpg` is a real 1200×630 image generated from the site's own photo and fonts — if the couple photo or names ever change, regenerate it to match (any 1200×630 image works; exact proportions matter more than the method).
+When the link is pasted into iMessage, SMS, Slack, etc., the preview card comes from the Open Graph tags in `index.html`'s `<head>` (`og:title`, `og:description`, `og:image`, `og:url`) plus the matching `twitter:*` tags. `og-image.jpg` is a real 1200×630 image generated from the site's own photo and fonts — if the couple photo or names ever change, regenerate it to match (any 1200×630 image works; exact proportions matter more than the method). `tools/og-image-template.html` is the editable source for that image (not part of the live site) — it has the exact regeneration command in a comment at the top.
 
 Two things that can make a preview not show up even when the tags are correct:
 - **The page has to be live** at the URL being shared — most apps' preview crawlers fetch the real page over the internet, so this won't work against `localhost`.
@@ -91,7 +91,7 @@ This repo's existing Pages setup is unchanged:
 └── assets/
     ├── fonts/
     │   ├── anton-latin.woff2            headline + date/time typeface
-    │   ├── beau-rivage-latin.woff2       script name typeface
+    │   ├── kaushan-script-latin.woff2    script typeface (names, form heading)
     │   ├── playfair-display-latin-700.woff2  location line + join-section typeface
     │   └── roboto-slab-latin.woff2      date/time + countdown numerals
     ├── couple-photo.jpg              real photo shown in the poster — see above to replace
@@ -103,13 +103,16 @@ This repo's existing Pages setup is unchanged:
     ├── apple-touch-icon.png          180×180 icon for iOS home-screen bookmarks
     ├── og-image.jpg                  1200×630 link-preview image (couple photo + names/date, generated from the site's own assets/fonts)
     └── photo-1.jpg, photo-2.jpg      unused leftovers from an earlier design iteration
+
+tools/
+└── og-image-template.html           editable source for og-image.jpg — not part of the live site
 ```
 
 ---
 
 ## Notes on fonts
 
-Anton, Beau Rivage, Playfair Display, and Roboto Slab are all licensed under the SIL Open Font License and are vendored locally as `.woff2` files under `assets/fonts/` (downloaded from Google Fonts) — no external font requests at runtime. If a browser can't load one for any reason, `styles.css` falls back to a generic equivalent (`'Arial Narrow', sans-serif` for the condensed faces, `'Brush Script MT', cursive` for the names, `Georgia, serif` for the serif text).
+Anton, Kaushan Script, Playfair Display, and Roboto Slab are all licensed under the SIL Open Font License and are vendored locally as `.woff2` files under `assets/fonts/` (downloaded from Google Fonts) — no external font requests at runtime. If a browser can't load one for any reason, `styles.css` falls back to a generic equivalent (`'Arial Narrow', sans-serif` for the condensed faces, `'Brush Script MT', cursive` for the names, `Georgia, serif` for the serif text).
 
 ## Notes on the paper texture
 

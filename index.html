@@ -136,13 +136,89 @@
     </div>
   </div>
 
-  <p class="join-body">Formal invitation to follow, please click below to share your address&hellip;</p>
+  <p class="join-body">Formal invitation to follow &mdash; please share your address below&hellip;</p>
 
-  <a class="address-btn"
-     id="address-btn"
-     href="https://forms.gle/V6bKL78ozwmJopm16"
-     target="_blank"
-     rel="noopener noreferrer">Share your address</a>
+  <!-- Address form. Submits straight to the Google Form (see script.js,
+       "Address form") — nothing is stored on this site. The entry.* IDs
+       in script.js map these fields to the Google Form's questions. -->
+  <div class="address-card" id="address-card">
+    <form class="address-form" id="address-form" hidden>
+      <p class="af-title">Where should we send it?</p>
+
+      <div class="af-row">
+        <label class="af-field">
+          <span class="af-label">First name</span>
+          <input name="first" type="text" autocomplete="given-name" required>
+        </label>
+        <label class="af-field">
+          <span class="af-label">Last name</span>
+          <input name="last" type="text" autocomplete="family-name" required>
+        </label>
+      </div>
+
+      <label class="af-field">
+        <span class="af-label">Email</span>
+        <input name="email" type="email" autocomplete="email" required>
+      </label>
+
+      <label class="af-field">
+        <span class="af-label">Phone</span>
+        <input name="phone" type="tel" autocomplete="tel" required>
+      </label>
+
+      <label class="af-field">
+        <span class="af-label">Street address</span>
+        <input name="street" type="text" autocomplete="address-line1" required>
+      </label>
+
+      <label class="af-field">
+        <span class="af-label">Apt / Unit <em>(optional)</em></span>
+        <input name="unit" type="text" autocomplete="address-line2">
+      </label>
+
+      <div class="af-row">
+        <label class="af-field af-grow">
+          <span class="af-label">City</span>
+          <input name="city" type="text" autocomplete="address-level2" required>
+        </label>
+        <label class="af-field af-narrow">
+          <span class="af-label">State</span>
+          <input name="state" type="text" autocomplete="address-level1" required>
+        </label>
+      </div>
+
+      <div class="af-row">
+        <label class="af-field af-narrow">
+          <span class="af-label">ZIP</span>
+          <input name="zip" type="text" autocomplete="postal-code" inputmode="numeric" required>
+        </label>
+        <label class="af-field af-grow">
+          <span class="af-label">Country <em>(if not U.S.)</em></span>
+          <input name="country" type="text" autocomplete="country-name">
+        </label>
+      </div>
+
+      <p class="af-note">Invitations will be mailed in April 2027.</p>
+
+      <button class="address-btn af-submit" type="submit">Send</button>
+      <p class="af-error" id="af-error" role="alert" hidden>
+        Something went wrong &mdash; please try again, or use
+        <a href="https://forms.gle/V6bKL78ozwmJopm16" target="_blank" rel="noopener noreferrer">this form</a>.
+      </p>
+    </form>
+
+    <div class="af-thanks" id="af-thanks" tabindex="-1" hidden>
+      <p class="af-thanks-script">Thank you<span id="af-thanks-name"></span>!</p>
+      <p class="af-thanks-body">Keep an eye on your mailbox.</p>
+    </div>
+
+    <!-- Shown only if JavaScript is off (script.js reveals the form). -->
+    <a class="address-btn"
+       id="address-fallback"
+       href="https://forms.gle/V6bKL78ozwmJopm16"
+       target="_blank"
+       rel="noopener noreferrer">Share your address</a>
+  </div>
 </section>
 
 <script src="script.js" defer></script>
