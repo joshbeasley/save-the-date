@@ -19,11 +19,11 @@
 }
 
 @font-face {
-  font-family: 'Kaushan Script';
+  font-family: 'MonteCarlo';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('assets/fonts/kaushan-script-latin.woff2') format('woff2');
+  src: url('assets/fonts/montecarlo-latin.woff2') format('woff2');
 }
 
 @font-face {
@@ -198,17 +198,29 @@ body {
 .strip-paper {
   position: absolute;
   inset: 0;
+  /* The shadow lives here and the paper + cut shape on ::before, so the
+     shadow traces the ribbon's outline (a clip-path on the same element
+     would clip its own shadow away). That outline is what keeps the
+     upper tail visible where it overlaps the same-colored photo frame. */
+  filter: drop-shadow(0 2px 4px rgba(17, 17, 15, 0.12));
+}
+
+.strip-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background: var(--paper-light);
   background-image: url('assets/paper-grain.svg');
   background-size: 140px 140px;
   background-blend-mode: multiply;
-  filter: drop-shadow(0 2px 4px rgba(17, 17, 15, 0.12));
+  /* Swallowtail ribbon end: two points with a V notch cut between
+     them. The extra vertices at each tip bevel it slightly so the
+     points read as cut ribbon rather than razor-sharp. */
   clip-path: polygon(
     100% 0%,
-    7% 0%, 3% 4%, 9% 7%, 4% 11%, 10% 15%,
-    5% 20%, 11% 25%, 6% 31%, 12% 37%, 7% 43%,
-    13% 49%, 8% 56%, 12% 62%, 7% 68%, 13% 74%,
-    8% 80%, 11% 85%, 5% 90%, 10% 95%, 4% 100%,
+    1.5% 0%, 0% 3%,
+    15% 50%,
+    0% 97%, 1.5% 100%,
     100% 100%
   );
 }
@@ -221,11 +233,12 @@ body {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding-left: 13%;
+  padding-left: 15%;
   padding-right: 9%;
-  font-family: 'Kaushan Script', 'Brush Script MT', cursive;
+  font-family: 'MonteCarlo', 'Brush Script MT', cursive;
   font-weight: 400;
-  font-size: 5.6cqw;
+  font-size: 6.3cqw;
+  word-spacing: 0.15em; /* MonteCarlo's own spaces nearly vanish */
   line-height: 1.35;
   white-space: nowrap;
   color: var(--ink);
@@ -255,6 +268,12 @@ body {
   display: flex;
   flex-direction: column;
   line-height: 0.95;
+}
+
+/* "5" over "PM": right-aligned so both lines sit flush against the
+   separator. */
+.td-col:first-child {
+  align-items: flex-end;
 }
 
 /* Both rows of each column share one size/weight/color — the video
@@ -368,7 +387,10 @@ html.anim-armed [data-anim="strip"] {
 }
 html.anim-armed [data-anim="names"] {
   transform: translateY(-26px) scale(0.97);
-  transform-origin: left center;
+  /* Right-anchored so the breathing zoom grows the names leftward into
+     the ribbon's notch space; anchored left, the end of "Wayland" was
+     pushed past the poster's clipped right edge at peak scale. */
+  transform-origin: right center;
 }
 html.anim-armed [data-anim="timedate"] {
   transform: translateY(-26px) scale(0.97);
@@ -619,11 +641,12 @@ html.anim-armed .location-line {
 .af-title {
   margin: 0 0 0.2rem;
   text-align: center;
-  font-family: 'Kaushan Script', 'Brush Script MT', cursive;
+  font-family: 'MonteCarlo', 'Brush Script MT', cursive;
   font-weight: 400;
   /* One line at every width: scales down with the form (cqi) rather
-     than wrapping, capped at 2.1rem on wider screens. */
-  font-size: min(2.1rem, 10cqi);
+     than wrapping, capped at 2.5rem on wider screens. */
+  font-size: min(2.5rem, 12cqi);
+  word-spacing: 0.15em;
   line-height: 1.2;
   white-space: nowrap;
   color: var(--ink);
@@ -732,9 +755,10 @@ html.anim-armed .location-line {
 
 .af-thanks-script {
   margin: 0;
-  font-family: 'Kaushan Script', 'Brush Script MT', cursive;
+  font-family: 'MonteCarlo', 'Brush Script MT', cursive;
   font-weight: 400;
-  font-size: clamp(2rem, 9vw, 2.6rem);
+  font-size: clamp(2.3rem, 10vw, 2.9rem);
+  word-spacing: 0.15em;
   line-height: 1.2;
   color: var(--ink);
 }

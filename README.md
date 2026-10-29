@@ -91,7 +91,7 @@ This repo's existing Pages setup is unchanged:
 └── assets/
     ├── fonts/
     │   ├── anton-latin.woff2            headline + date/time typeface
-    │   ├── kaushan-script-latin.woff2    script typeface (names, form heading)
+    │   ├── montecarlo-latin.woff2        script typeface (names, form heading)
     │   ├── playfair-display-latin-700.woff2  location line + join-section typeface
     │   └── roboto-slab-latin.woff2      date/time + countdown numerals
     ├── couple-photo.jpg              real photo shown in the poster — see above to replace
@@ -112,7 +112,7 @@ tools/
 
 ## Notes on fonts
 
-Anton, Kaushan Script, Playfair Display, and Roboto Slab are all licensed under the SIL Open Font License and are vendored locally as `.woff2` files under `assets/fonts/` (downloaded from Google Fonts) — no external font requests at runtime. If a browser can't load one for any reason, `styles.css` falls back to a generic equivalent (`'Arial Narrow', sans-serif` for the condensed faces, `'Brush Script MT', cursive` for the names, `Georgia, serif` for the serif text).
+Anton, MonteCarlo, Playfair Display, and Roboto Slab are all licensed under the SIL Open Font License and are vendored locally as `.woff2` files under `assets/fonts/` (downloaded from Google Fonts) — no external font requests at runtime. If a browser can't load one for any reason, `styles.css` falls back to a generic equivalent (`'Arial Narrow', sans-serif` for the condensed faces, `'Brush Script MT', cursive` for the names, `Georgia, serif` for the serif text).
 
 ## Notes on the paper texture
 
